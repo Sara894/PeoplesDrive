@@ -26,6 +26,11 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInput;
     [SerializeField] private Rigidbody rb;
 
+    void Start()
+    {
+        rb.centerOfMass = new Vector3(0, -0.5f, 0);
+    }
+
     private void OnEnable()
     {
         moveAction.action.Enable();
