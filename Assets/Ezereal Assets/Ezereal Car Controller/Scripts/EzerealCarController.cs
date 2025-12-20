@@ -12,6 +12,7 @@ namespace Ezereal
         [SerializeField] EzerealLightController ezerealLightController;
         [SerializeField] EzerealSoundController ezerealSoundController;
         [SerializeField] EzerealWheelFrictionController ezerealWheelFrictionController;
+        [SerializeField] CarSurfaceController surfaceController;
 
         [Header("References")]
 
@@ -80,6 +81,11 @@ namespace Ezereal
             rearLeftWheelCollider,
             rearRightWheelCollider,
             };
+
+            if (surfaceController == null)
+            {
+                surfaceController = GetComponent<CarSurfaceController>();
+            }
 
             if (ezerealLightController == null)
             {
@@ -173,11 +179,18 @@ namespace Ezereal
                 {
                     // Calculate how close the car is to top speed
                     // as a number from zero to one
-                    speedFactor = Mathf.InverseLerp(0, maxForwardSpeed, currentSpeed);
+                    //speedFactor = Mathf.InverseLerp(0, maxForwardSpeed, currentSpeed); CHENGED BY ME
 
                     // Use that to calculate how much torque is available 
                     // (zero torque at top speed)
-                    float currentMotorTorque = Mathf.Lerp(horsePower, 0, speedFactor);
+                    //float currentMotorTorque = Mathf.Lerp(horsePower, 0, speedFactor); CHANGED BY ME
+
+                    float speedMul = surfaceController != null ? surfaceController.SpeedMultiplier : 1f;
+                    float powerMul = surfaceController != null ? surfaceController.PowerMultiplier : 1f;
+
+                    speedFactor = Mathf.InverseLerp(0, maxForwardSpeed * speedMul, currentSpeed);
+                    float currentMotorTorque = Mathf.Lerp(horsePower * powerMul, 0, speedFactor);
+
 
                     if (currentAccelerationValue > 0f && currentSpeed < maxForwardSpeed)
                     {
