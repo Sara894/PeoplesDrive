@@ -56,6 +56,30 @@ public class QuestPoint : MonoBehaviour
             GameEventsManager.instance.questEvents.onQuestStartBlocked += OnQuestStartBlocked;
             GameEventsManager.instance.inputEvents.onSubmitPressed += SubmitPressed;
         }
+        
+        InitializeQuestState();
+    }
+    
+    private void InitializeQuestState()
+    {
+        if (QuestManager.instance != null)
+        {
+            Quest quest = QuestManager.instance.GetQuestById(questId);
+            if (quest != null)
+            {
+                currentQuestState = quest.state;
+                Debug.Log($"QuestPoint {gameObject.name}: Initialized with quest state: {currentQuestState}");
+                
+                if (questIcon != null)
+                {
+                    questIcon.SetState(currentQuestState, startPoint, finishPoint);
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"QuestPoint {gameObject.name}: Quest '{questId}' not found in QuestManager!");
+            }
+        }
     }
 
     private void OnDisable()
