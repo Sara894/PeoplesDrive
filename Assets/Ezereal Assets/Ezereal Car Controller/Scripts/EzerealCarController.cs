@@ -40,15 +40,15 @@ namespace Ezereal
         [Header("Settings")]
         public bool isStarted = true;
 
-        public float maxForwardSpeed = 100f; // 100f default
+        public float maxForwardSpeed = 140f; // 100f default - changed to 140
         public float maxReverseSpeed = 30f; // 30f default
-        public float horsePower = 1000f; // 100f0 default
+        public float horsePower = 700f; // 100f0 default - changed to 700
         public float brakePower = 2000f; // 2000f default
         public float handbrakeForce = 3000f; // 3000f default
-        public float maxSteerAngle = 30f; // 30f default
-        public float steeringSpeed = 5f; // 0.5f default
+        public float maxSteerAngle = 15f; // 30f default - changed to 15
+        public float steeringSpeed = 2.5f; // 0.5f default - changed to 2.5
         public float stopThreshold = 1f; // 1f default. At what speed car will make a full stop
-        public float decelerationSpeed = 0.5f; // 0.5f default
+        public float decelerationSpeed = 0.2f; // 0.5f default - changed to 0.2
         public float maxSteeringWheelRotation = 360f; // 360 for real steering wheel. 120 would be more suitable for racing.
 
         [Header("Drive Type")]
@@ -188,8 +188,11 @@ namespace Ezereal
                     float speedMul = surfaceController != null ? surfaceController.SpeedMultiplier : 1f;
                     float powerMul = surfaceController != null ? surfaceController.PowerMultiplier : 1f;
 
-                    speedFactor = Mathf.InverseLerp(0, maxForwardSpeed * speedMul, currentSpeed);
-                    float currentMotorTorque = Mathf.Lerp(horsePower * powerMul, 0, speedFactor);
+                    //speedFactor = Mathf.InverseLerp(0, maxForwardSpeed * speedMul, currentSpeed);
+                    //float currentMotorTorque = Mathf.Lerp(horsePower * powerMul, 0, speedFactor); // changed again for better speed control
+
+                    float currentMotorTorque = horsePower * powerMul;
+
 
 
                     if (currentAccelerationValue > 0f && currentSpeed < maxForwardSpeed)
