@@ -11439,7 +11439,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &457552165384752147
 Transform:
   m_ObjectHideFlags: 0
@@ -12374,7 +12374,7 @@ GameObject:
   - component: {fileID: 5463043996463787377}
   m_Layer: 0
   m_Name: Right Back Wheel Arch
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16871,7 +16871,7 @@ GameObject:
   - component: {fileID: 3821005469766176041}
   m_Layer: 0
   m_Name: Wheel Arches
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23291,7 +23291,7 @@ GameObject:
   - component: {fileID: 4509767869520548737}
   m_Layer: 0
   m_Name: Left Back Wheel Arch
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24088,7 +24088,7 @@ GameObject:
   - component: {fileID: 1000975647734573224}
   m_Layer: 0
   m_Name: Base
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50792,7 +50792,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 456672716829194938}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.08341698, y: -0, z: -0, w: 0.99651474}
+  m_LocalRotation: {x: 0.08341698, y: 0, z: 0, w: 0.99651474}
   m_LocalPosition: {x: -0.51, y: 0.57, z: -3.38}
   m_LocalScale: {x: 0.7042255, y: 0.9655719, z: 0.44358793}
   m_ConstrainProportionsScale: 0
@@ -51862,7 +51862,7 @@ GameObject:
   - component: {fileID: 1056062599042676024}
   m_Layer: 0
   m_Name: Roof
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -57000,7 +57000,7 @@ GameObject:
   - component: {fileID: 432042460802177221}
   m_Layer: 0
   m_Name: Back
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -59983,7 +59983,7 @@ GameObject:
   - component: {fileID: 2552638884111976220}
   m_Layer: 0
   m_Name: Front
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -61395,7 +61395,7 @@ GameObject:
   - component: {fileID: 8571297796379774779}
   m_Layer: 0
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
