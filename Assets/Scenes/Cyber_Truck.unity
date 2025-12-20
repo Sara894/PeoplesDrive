@@ -31420,7 +31420,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3278981372828425380}
   serializedVersion: 4
-  m_Mass: 1500
+  m_Mass: 2300
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -53943,13 +53943,13 @@ MonoBehaviour:
   isStarted: 1
   maxForwardSpeed: 200
   maxReverseSpeed: 30
-  horsePower: 1000
+  horsePower: 2000
   brakePower: 2000
   handbrakeForce: 3000
-  maxSteerAngle: 30
-  steeringSpeed: 5
+  maxSteerAngle: 15
+  steeringSpeed: 2.5
   stopThreshold: 1
-  decelerationSpeed: 0.5
+  decelerationSpeed: 0.2
   maxSteeringWheelRotation: 100
   driveType: -1
   currentGear: 1
