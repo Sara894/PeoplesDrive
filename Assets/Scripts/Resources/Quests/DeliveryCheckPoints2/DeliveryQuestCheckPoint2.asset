@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7988160b831c8a74080aa6b8fc0b8c83, type: 3}
+  m_Name: DeliveryQuestCheckPoint2
+  m_EditorClassIdentifier: 
+  <id>k__BackingField: DeliveryQuestCheckPoint2
+  displayName: DeliveryBoxThroughCheckPoints2
+  levelRequiredToUnlock: 0
+  questPrerequisites: []
+  questStepPrefabs:
+  - {fileID: 6808507222663015514, guid: 485369f7141d76f4eacbc43eee69dd4e, type: 3}
+  - {fileID: 3358855139061945650, guid: ef2a0671430f46c4e8de965fac102a9e, type: 3}
+  - {fileID: 510929239733525716, guid: 340d147992a1a674fa8b7371e41479ad, type: 3}
+  - {fileID: 9115927148033070424, guid: ad402d0e5ada34b4a939f570d77e101b, type: 3}
+  - {fileID: 3225965341999476664, guid: bc4f5cfd17bf2524da27bc158bd1f47c, type: 3}
+  arrowWaypointNames:
+  - QuestPointSCheck2
+  - VisitFirstCheckPointQuestStep_Check2
+  - VisitSecondCheckPointQuestStep_Check2
+  - VisitThirdCheckPointQuestStep_Check2
+  - QuestPointFCheck2
+  timeLimitInSeconds: 16
+  moneyReward: 50
+  experienceCommunityReward: 25
