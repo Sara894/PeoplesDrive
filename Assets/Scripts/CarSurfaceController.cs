@@ -5,8 +5,16 @@ public class CarSurfaceController : MonoBehaviour
     public float SpeedMultiplier { get; private set; } = 1f;
     public float PowerMultiplier { get; private set; } = 1f;
 
-    [Header("Wheel Setup")]
     [SerializeField] WheelCollider[] wheels;
+    [SerializeField] SurfaceByLayer surfaceByLayer;
+
+    void Awake()
+    {
+        if (surfaceByLayer == null)
+        {
+            surfaceByLayer = FindObjectOfType<SurfaceByLayer>();
+        }
+    }
 
     void FixedUpdate()
     {
@@ -19,22 +27,16 @@ public class CarSurfaceController : MonoBehaviour
         float powerSum = 0f;
         int grounded = 0;
 
-        foreach (var wheel in wheels)
+        foreach (WheelCollider wheel in wheels)
         {
             if (wheel.GetGroundHit(out WheelHit hit))
             {
-                SurfaceData surface = hit.collider.GetComponent<SurfaceData>();
-                if (surface != null)
-                {
-                    speedSum += surface.speedMultiplier;
-                    powerSum += surface.powerMultiplier;
-                }
-                else
-                {
-                    speedSum += 1f;
-                    powerSum += 1f;
-                }
+                surfaceByLayer.GetMultipliers(hit.collider.gameObject.layer,
+                    out float speed,
+                    out float power);
 
+                speedSum += speed;
+                powerSum += power;
                 grounded++;
             }
         }
@@ -51,4 +53,3 @@ public class CarSurfaceController : MonoBehaviour
         }
     }
 }
-
