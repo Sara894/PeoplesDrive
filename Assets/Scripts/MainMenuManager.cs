@@ -9,13 +9,11 @@ public class MainMenuManager : MonoBehaviour
     [Header("Buttons")]
     [SerializeField] Button startGameButton;
     [SerializeField] Button exitGameButton;
-    [SerializeField] Button settings;
+    [SerializeField] Button toggleMusicButton; // Replacing settings
     [SerializeField] Button yesExitGame;
     [SerializeField] Button noExitGame;
-    [SerializeField] Button closeButtonSettings;
 
     [Header("UI Panels")]
-    [SerializeField] GameObject settingsUI;
     [SerializeField] GameObject mainMenuUI;
     [SerializeField] GameObject exitGameUI;
     [SerializeField] GameObject loadingScreenUI;
@@ -23,10 +21,19 @@ public class MainMenuManager : MonoBehaviour
     [Header("Input Actions for UI")]
     public InputActionReference cancelAction;
 
+    private bool isMusicOn = true;
+
     private void OnEnable()
     {
         cancelAction.action.Enable();
         cancelAction.action.performed += OnCancel;
+
+        // Add listeners
+        startGameButton.onClick.AddListener(LoadSinglePlayer);
+        exitGameButton.onClick.AddListener(OpenExitGameCanvas);
+        yesExitGame.onClick.AddListener(ExitGame);
+        noExitGame.onClick.AddListener(OpenMainMenu);
+        toggleMusicButton.onClick.AddListener(ToggleMusic);
     }
 
     private void OnDisable()
@@ -39,12 +46,6 @@ public class MainMenuManager : MonoBehaviour
     {
         if (loadingScreenUI.activeSelf)
             return;
-
-        if (settingsUI.activeSelf)
-        {
-            OpenMainMenu();
-            return;
-        }
 
         if (exitGameUI.activeSelf)
         {
@@ -68,12 +69,11 @@ public class MainMenuManager : MonoBehaviour
     {
         loadingScreenUI.SetActive(true);
         mainMenuUI.SetActive(false);
-        settingsUI.SetActive(false);
         exitGameUI.SetActive(false);
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f); // optional delay
 
-        AsyncOperation operation = SceneManager.LoadSceneAsync("ControlsPopUp");
+        AsyncOperation operation = SceneManager.LoadSceneAsync("Cyber_Truck"); // Load Cyber_Truck scene
         operation.allowSceneActivation = true;
 
         yield return new WaitUntil(() => operation.isDone);
@@ -81,27 +81,27 @@ public class MainMenuManager : MonoBehaviour
 
     public void OpenExitGameCanvas()
     {
-        settingsUI.SetActive(false);
         mainMenuUI.SetActive(false);
         exitGameUI.SetActive(true);
-    }
-
-    public void OpenSettings()
-    {
-        settingsUI.SetActive(true);
-        mainMenuUI.SetActive(false);
-        exitGameUI.SetActive(false);
     }
 
     public void OpenMainMenu()
     {
         exitGameUI.SetActive(false);
-        settingsUI.SetActive(false);
         mainMenuUI.SetActive(true);
+    }
+
+    private void ToggleMusic()
+    {
+        isMusicOn = !isMusicOn;
+        // Here you can add your actual music toggle logic, e.g.:
+        // AudioListener.pause = !isMusicOn;
+        Debug.Log("Music is now " + (isMusicOn ? "ON" : "OFF"));
     }
 
     public void ExitGame()
     {
         Application.Quit();
+        Debug.Log("Game Closed");
     }
 }
