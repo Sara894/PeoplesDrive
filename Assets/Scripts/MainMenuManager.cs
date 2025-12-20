@@ -18,6 +18,10 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject exitGameUI;
     [SerializeField] GameObject loadingScreenUI;
 
+    [Header("Safety Screen")]
+    [SerializeField] GameObject safetyCanvas; // assign in inspector
+    [SerializeField] float safetyScreenDuration = 3f; // 3-4 seconds
+
     [Header("Input Actions for UI")]
     public InputActionReference cancelAction;
 
@@ -71,13 +75,21 @@ public class MainMenuManager : MonoBehaviour
         mainMenuUI.SetActive(false);
         exitGameUI.SetActive(false);
 
-        yield return new WaitForSeconds(1f); // optional delay
+        // Show safety screen
+        if (safetyCanvas != null)
+        {
+            safetyCanvas.SetActive(true);
+            yield return new WaitForSeconds(safetyScreenDuration);
+            safetyCanvas.SetActive(false);
+        }
 
-        AsyncOperation operation = SceneManager.LoadSceneAsync("Cyber_Truck"); // Load Cyber_Truck scene
+        // Load Cyber_Truck scene
+        AsyncOperation operation = SceneManager.LoadSceneAsync("Cyber_Truck");
         operation.allowSceneActivation = true;
 
         yield return new WaitUntil(() => operation.isDone);
     }
+
 
     public void OpenExitGameCanvas()
     {
