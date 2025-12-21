@@ -14,14 +14,12 @@ public class DeliverBoxQuestStep_Simple : QuestStep
     private bool hasDelivered = false;
     private ItemSpawnPoint itemSpawnPoint;
     private GameObject deliveryItem;
-    private Movement playerMovement;
 
     private void Start()
     {
         Debug.Log("DeliverBoxQuestStep_Simple: Start() called");
         
         FindItemSpawnPoint();
-        FindPlayerMovement();
         
         BoxCollider trigger = GetComponent<BoxCollider>();
         if (trigger != null)
@@ -57,44 +55,23 @@ public class DeliverBoxQuestStep_Simple : QuestStep
 
     private void FindItemSpawnPoint()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
+        itemSpawnPoint = FindObjectOfType<ItemSpawnPoint>();
+        
+        if (itemSpawnPoint != null)
         {
-            itemSpawnPoint = player.GetComponentInChildren<ItemSpawnPoint>();
-            
-            if (itemSpawnPoint != null)
+            deliveryItem = itemSpawnPoint.GetActiveItem(itemName);
+            if (deliveryItem != null)
             {
-                deliveryItem = itemSpawnPoint.GetActiveItem(itemName);
-                if (deliveryItem != null)
-                {
-                    Debug.Log($"DeliverBoxQuestStep_Simple: Found active item '{itemName}': {deliveryItem.name}");
-                }
-                else
-                {
-                    Debug.LogError($"No active item '{itemName}' found! The item should have been activated by PickupBoxQuestStep_Simple.");
-                }
+                Debug.Log($"DeliverBoxQuestStep_Simple: Found active item '{itemName}': {deliveryItem.name}");
             }
             else
             {
-                Debug.LogError("ItemSpawnPoint not found on Player!");
+                Debug.LogError($"No active item '{itemName}' found! The item should have been activated by PickupBoxQuestStep_Simple.");
             }
         }
-    }
-
-    private void FindPlayerMovement()
-    {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
+        else
         {
-            playerMovement = player.GetComponent<Movement>();
-            if (playerMovement != null)
-            {
-                Debug.Log("DeliverBoxQuestStep_Simple: Found Movement component on player");
-            }
-            else
-            {
-                Debug.LogError("Movement component not found on Player!");
-            }
+            Debug.LogError("ItemSpawnPoint not found in scene!");
         }
     }
 
@@ -110,11 +87,6 @@ public class DeliverBoxQuestStep_Simple : QuestStep
             }
 
             Debug.Log($"DeliverBoxQuestStep_Simple: Player entered delivery zone for active quest '{questId}'!");
-            
-            if (playerMovement != null)
-            {
-                playerMovement.StopMovement();
-            }
             
             DeliverBox();
         }
@@ -154,11 +126,6 @@ public class DeliverBoxQuestStep_Simple : QuestStep
         else
         {
             Debug.LogWarning("ItemSpawnPoint or deliveryItem is null - cannot deactivate item");
-        }
-        
-        if (playerMovement != null)
-        {
-            playerMovement.ResumeMovement();
         }
         
         if (showCharacterOnDelivery)

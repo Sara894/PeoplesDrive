@@ -47,14 +47,25 @@ public class QuestArrowPointer : MonoBehaviour
 
     private void Update()
     {
-        if (!isActive || currentTarget == null)
+        if (!isActive || currentTarget == null || arrowVisual == null)
             return;
 
-        Vector3 relativePos = currentTarget.position - transform.position;
-        if (relativePos.sqrMagnitude > 0.01f)
+        Vector3 pivotPosition = transform.position;
+        Vector3 targetPosition = currentTarget.position;
+        
+        Vector3 directionToTarget = targetPosition - pivotPosition;
+        directionToTarget.y = 0;
+        
+        if (directionToTarget.sqrMagnitude > 0.01f)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(relativePos, Vector3.up);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+            Quaternion targetRotation = Quaternion.LookRotation(directionToTarget, Vector3.up);
+            
+            float targetYAngle = targetRotation.eulerAngles.y;
+            float currentYAngle = arrowVisual.transform.eulerAngles.y;
+            
+            float newYAngle = Mathf.LerpAngle(currentYAngle, targetYAngle, Time.deltaTime * rotationSpeed);
+            
+            arrowVisual.transform.eulerAngles = new Vector3(0, newYAngle, 0);
         }
     }
 
