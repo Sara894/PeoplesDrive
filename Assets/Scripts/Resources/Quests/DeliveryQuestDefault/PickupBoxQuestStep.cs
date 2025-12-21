@@ -10,22 +10,10 @@ public class PickupBoxQuestStep : QuestStep
     
     private GameObject deliveryItem;
     private ItemSpawnPoint itemSpawnPoint;
-    private Movement playerMovement;
 
     private void Start()
     {
         Debug.Log("PickupBoxQuestStep: Start() called - Auto-pickup enabled");
-        
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
-        {
-            playerMovement = player.GetComponent<Movement>();
-            if (playerMovement != null)
-            {
-                playerMovement.StopMovement();
-                Debug.Log("PickupBoxQuestStep: Player movement STOPPED for pickup");
-            }
-        }
         
         FindItemSpawnPoint();
         UpdateQuestStatus("Preparing package for pickup...");
@@ -37,33 +25,25 @@ public class PickupBoxQuestStep : QuestStep
     {
         Debug.Log("PickupBoxQuestStep: Finding ItemSpawnPoint...");
         
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
+        itemSpawnPoint = FindObjectOfType<ItemSpawnPoint>();
+        
+        if (itemSpawnPoint != null)
         {
-            itemSpawnPoint = player.GetComponentInChildren<ItemSpawnPoint>();
+            Debug.Log($"ItemSpawnPoint found on {itemSpawnPoint.gameObject.name}");
             
-            if (itemSpawnPoint != null)
+            deliveryItem = itemSpawnPoint.GetAvailableItem(itemName);
+            if (deliveryItem != null)
             {
-                Debug.Log($"ItemSpawnPoint found on {itemSpawnPoint.gameObject.name}");
-                
-                deliveryItem = itemSpawnPoint.GetAvailableItem(itemName);
-                if (deliveryItem != null)
-                {
-                    Debug.Log($"Found available item '{itemName}': {deliveryItem.name}, currently active: {deliveryItem.activeSelf}");
-                }
-                else
-                {
-                    Debug.LogError($"No available item '{itemName}' found! Check ItemSpawnPoint setup.");
-                }
+                Debug.Log($"Found available item '{itemName}': {deliveryItem.name}, currently active: {deliveryItem.activeSelf}");
             }
             else
             {
-                Debug.LogError("ItemSpawnPoint component not found on Player or children!");
+                Debug.LogError($"No available item '{itemName}' found! Check ItemSpawnPoint setup.");
             }
         }
         else
         {
-            Debug.LogError("Player not found!");
+            Debug.LogError("ItemSpawnPoint component not found in scene!");
         }
     }
 
@@ -84,12 +64,6 @@ public class PickupBoxQuestStep : QuestStep
         UpdateQuestStatus("Package loaded! Deliver it to the destination.");
         
         StartQuestTimer();
-        
-        if (playerMovement != null)
-        {
-            playerMovement.ResumeMovement();
-            Debug.Log("PickupBoxQuestStep: Player movement RESUMED after pickup");
-        }
         
         FinishQuestStep();
     }

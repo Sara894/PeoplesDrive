@@ -47,12 +47,13 @@ public class DeliveryCheckPoints : QuestStep
     private void FindPlayer()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null && requiresDeliveryItem)
+        
+        if (requiresDeliveryItem)
         {
-            itemSpawnPoint = player.GetComponentInChildren<ItemSpawnPoint>();
+            itemSpawnPoint = FindObjectOfType<ItemSpawnPoint>();
             if (itemSpawnPoint == null)
             {
-                Debug.LogWarning("DeliveryCheckPoints: ItemSpawnPoint not found on player!");
+                Debug.LogWarning("DeliveryCheckPoints: ItemSpawnPoint not found in scene!");
             }
         }
     }
