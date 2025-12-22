@@ -34558,7 +34558,7 @@ GameObject:
   - component: {fileID: 3995526004545351237}
   - component: {fileID: 8563186805250415125}
   m_Layer: 0
-  m_Name: Ezereal Car Controller
+  m_Name: ' Car Controller'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37002,7 +37002,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 67d1239777fa0e944b8dee2f1d7df18d, type: 3}
+  m_Actions: {fileID: -944628639613478452, guid: f008bd9337e5eb44bb8426b3fd99c406, type: 3}
   m_NotificationBehavior: 0
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -37017,7 +37017,7 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Car
+  m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!23 &4835454594586080832
@@ -37472,7 +37472,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4217903052197168351}
   m_Layer: 0
-  m_Name: Electric Truck - Ready To Drive
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53921,10 +53921,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46348285f23b1144dad9e361a04831c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ezerealLightController: {fileID: 284304571132140858}
-  ezerealSoundController: {fileID: 1922684700078731137}
-  ezerealWheelFrictionController: {fileID: 5899923509925154056}
-  surfaceController: {fileID: 0}
   vehicleRB: {fileID: 3877205697823850069}
   frontLeftWheelCollider: {fileID: 742887429672759593}
   frontRightWheelCollider: {fileID: 8242985609743872357}
@@ -53934,37 +53930,27 @@ MonoBehaviour:
   frontRightWheelMesh: {fileID: 6122987066721555022}
   rearLeftWheelMesh: {fileID: 8757145007353425749}
   rearRightWheelMesh: {fileID: 4286530297328098710}
-  steeringWheel: {fileID: 6540983949989731163}
-  currentGearTMP_UI: {fileID: 6533014353049073316}
-  currentGearTMP_Dashboard: {fileID: 5273923612669936873}
-  currentSpeedTMP_UI: {fileID: 388552450528333117}
-  currentSpeedTMP_Dashboard: {fileID: 8884755619666982950}
-  accelerationSlider: {fileID: 4973847895603730640}
-  isStarted: 1
-  maxForwardSpeed: 200
-  maxReverseSpeed: 30
-  horsePower: 2000
-  brakePower: 2000
-  handbrakeForce: 3000
+  maxMotorTorque: 700
   maxSteerAngle: 15
-  steeringSpeed: 2.5
-  stopThreshold: 1
-  decelerationSpeed: 0.2
-  maxSteeringWheelRotation: 100
-  driveType: -1
-  currentGear: 1
-  stationary: 1
-  currentSpeed: 0
-  currentAccelerationValue: 0
-  currentBrakeValue: 0
-  currentHandbrakeValue: 0
-  currentSteerAngle: 0
-  targetSteerAngle: 0
-  FrontLeftWheelRPM: 0
-  FrontRightWheelRPM: 0
-  RearLeftWheelRPM: 0
-  RearRightWheelRPM: 0
-  speedFactor: 0
+  brakeTorque: 2000
+  moveAction:
+    m_Name: Move
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 0b3b78d6-62e9-45cf-865e-9a288b7e4054
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  brakeAction:
+    m_Name: Brake
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 69f9ccac-8ab2-498d-94a6-6733fe40f3a5
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!222 &7692917153022434528
 CanvasRenderer:
   m_ObjectHideFlags: 0
