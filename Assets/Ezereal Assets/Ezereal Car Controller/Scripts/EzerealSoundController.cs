@@ -25,8 +25,6 @@ namespace Ezereal
                 if (ezerealCarController == null || ezerealCarController.vehicleRB == null || tireAudio == null || engineAudio == null)
                 {
                     Debug.LogWarning("ezerealSoundController is missing some references. Ignore or attach them if you want to have sound controls.");
-
-
                 }
 
                 if (tireAudio != null)
@@ -66,68 +64,36 @@ namespace Ezereal
 #if UNITY_6000_0_OR_NEWER
                 if (ezerealCarController != null && ezerealCarController.vehicleRB != null && tireAudio != null && engineAudio != null)
                 {
-                    if (!ezerealCarController.stationary && !alreadyPlaying && !ezerealCarController.InAir())
+                    float carSpeed = ezerealCarController.vehicleRB.linearVelocity.magnitude;
+#else
+                if (ezerealCarController != null && ezerealCarController.vehicleRB != null && tireAudio != null && engineAudio != null)
+                {
+                    float carSpeed = ezerealCarController.vehicleRB.velocity.magnitude;
+#endif
+                    bool isStationary = carSpeed < 0.5f;
+
+                    if (!isStationary && !alreadyPlaying && !ezerealCarController.InAir())
                     {
                         tireAudio.Play();
                         alreadyPlaying = true;
                     }
-                    else if (ezerealCarController.stationary || ezerealCarController.InAir())
+                    else if (isStationary || ezerealCarController.InAir())
                     {
                         tireAudio.Stop();
                         alreadyPlaying = false;
                     }
 
-                    // Get the car's current speed
-                    float speed = ezerealCarController.vehicleRB.linearVelocity.magnitude;
-
                     // Calculate the volume based on speed
-                    float targetVolume = Mathf.Clamp01(speed / 15) * maxVolume;
-
-
+                    float targetVolume = Mathf.Clamp01(carSpeed / 15f) * maxVolume;
                     tireAudio.volume = targetVolume;
 
-                    //Tire Pitch
-
-                    float tireSoundPitch = 0.8f + (Mathf.Abs(ezerealCarController.vehicleRB.linearVelocity.magnitude) / 50f);
+                    // Tire Pitch
+                    float tireSoundPitch = 0.8f + (carSpeed / 50f);
                     tireAudio.pitch = tireSoundPitch;
 
-                    //Engine Pitch
-
-                    float engineSoundPitch = 0.8f + (Mathf.Abs(ezerealCarController.vehicleRB.linearVelocity.magnitude) / 25f);
+                    // Engine Pitch
+                    float engineSoundPitch = 0.8f + (carSpeed / 25f);
                     engineAudio.pitch = engineSoundPitch;
-#else
-            if (ezerealCarController != null && ezerealCarController.vehicleRB != null && tireAudio != null && engineAudio != null)
-            {
-                if (!ezerealCarController.stationary && !alreadyPlaying && !ezerealCarController.InAir())
-                {
-                    tireAudio.Play();
-                    alreadyPlaying = true;
-                }
-                else if (ezerealCarController.stationary || ezerealCarController.InAir())
-                {
-                    tireAudio.Stop();
-                    alreadyPlaying = false;
-                }
-
-                // Get the car's current speed
-                float speed = ezerealCarController.vehicleRB.velocity.magnitude;
-
-                // Calculate the volume based on speed
-                float targetVolume = Mathf.Clamp01(speed / 15) * maxVolume;
-
-
-                tireAudio.volume = targetVolume;
-
-                //Tire Pitch
-
-                float tireSoundPitch = 0.8f + (Mathf.Abs(ezerealCarController.vehicleRB.velocity.magnitude) / 50f);
-                tireAudio.pitch = tireSoundPitch;
-
-                //Engine Pitch
-
-                float engineSoundPitch = 0.8f + (Mathf.Abs(ezerealCarController.vehicleRB.velocity.magnitude) / 25f);
-                engineAudio.pitch = engineSoundPitch;
-#endif
                 }
             }
         }
