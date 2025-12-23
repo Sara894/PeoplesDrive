@@ -111,7 +111,6 @@ public class MainMenuManager : MonoBehaviour
         thankYouImage?.SetActive(false);
     }
 
-    // NEW: Credits logic
     public void OpenCreditsCanvas()
     {
         mainMenuUI.SetActive(false);
@@ -131,7 +130,6 @@ public class MainMenuManager : MonoBehaviour
         Debug.Log("Music is now " + (isMusicOn ? "ON" : "OFF"));
     }
 
-    // NEW: Show thank you image and quit
     public void ShowThankYouAndExit()
     {
         exitGameUI.SetActive(false);
