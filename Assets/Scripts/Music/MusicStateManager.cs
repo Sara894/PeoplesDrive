@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class MusicStateManager : MonoBehaviour
@@ -8,6 +9,10 @@ public class MusicStateManager : MonoBehaviour
     [SerializeField] private AudioClip menuMusic;
     [SerializeField] private AudioClip freeRoamMusic;
     [SerializeField] private AudioClip questActiveMusic;
+
+    [Header("Volume Control")]
+    [Range(0f, 1f)]
+    [SerializeField] private float backgroundMusicVolume = 1f;
 
     [Header("State Settings")]
     [SerializeField] private MusicState currentState = MusicState.Menu;
@@ -37,7 +42,29 @@ public class MusicStateManager : MonoBehaviour
     private void Start()
     {
         SubscribeToEvents();
+        StartCoroutine(PlayMusicAfterAudioManagerReady());
+    }
+
+    private void Update()
+    {
+        ApplyBackgroundMusicVolume();
+    }
+
+    private IEnumerator PlayMusicAfterAudioManagerReady()
+    {
+        while (AudioManager.instance == null)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        yield return new WaitForSeconds(0.3f);
+        
         PlayMusicForCurrentState();
+
+        if (debugMode)
+        {
+            Debug.Log("MusicStateManager: Started playing initial music");
+        }
     }
 
     private void OnDestroy()
@@ -151,6 +178,34 @@ public class MusicStateManager : MonoBehaviour
                 Debug.LogWarning($"MusicStateManager: No music assigned for state {currentState}");
             }
         }
+    }
+
+    private void ApplyBackgroundMusicVolume()
+    {
+        if (AudioManager.instance != null)
+        {
+            AudioSource musicSource = AudioManager.instance.GetMusicAudioSource();
+            if (musicSource != null && musicSource.volume != backgroundMusicVolume)
+            {
+                musicSource.volume = backgroundMusicVolume;
+            }
+        }
+    }
+
+    public void SetBackgroundMusicVolume(float volume)
+    {
+        backgroundMusicVolume = Mathf.Clamp01(volume);
+        ApplyBackgroundMusicVolume();
+
+        if (debugMode)
+        {
+            Debug.Log($"MusicStateManager: Background music volume set to {backgroundMusicVolume:F2}");
+        }
+    }
+
+    public float GetBackgroundMusicVolume()
+    {
+        return backgroundMusicVolume;
     }
 
     public void TransitionToMenu()

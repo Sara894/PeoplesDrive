@@ -314,4 +314,5 @@ public class AudioManager : MonoBehaviour
     public float GetUIVolume() => uiVolume;
     public bool IsMusicPlaying() => musicSource != null && musicSource.isPlaying;
     public AudioClip GetCurrentMusic() => musicSource != null ? musicSource.clip : null;
+    public AudioSource GetMusicAudioSource() => musicSource;
 }
