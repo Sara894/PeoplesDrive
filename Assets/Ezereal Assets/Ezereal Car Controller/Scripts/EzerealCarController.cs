@@ -18,11 +18,10 @@ namespace Ezereal
         public Transform rearRightWheelMesh;
 
         [Header("Settings")]
-        public float maxMotorTorque = 700f;
-        public float maxSteerAngle = 15f;
+        public float maxMotorTorque = 400f;   // Lower for gentle acceleration
+        public float maxSteerAngle = 5f;      // Lower for gentle steering
         public float brakeTorque = 2000f;
 
-        // Input System actions
         public InputAction moveAction;   // Vector2: y=forward/back, x=left/right
         public InputAction brakeAction;  // Button: brake
 
@@ -61,26 +60,26 @@ namespace Ezereal
 
         private void FixedUpdate()
         {
-            // Motor
+            // Motor torque (all wheels for simplicity)
             float motor = maxMotorTorque * motorInput;
             frontLeftWheelCollider.motorTorque = motor;
             frontRightWheelCollider.motorTorque = motor;
             rearLeftWheelCollider.motorTorque = motor;
             rearRightWheelCollider.motorTorque = motor;
 
-            // Steering
+            // Steering (front wheels only)
             float steerAngle = maxSteerAngle * steerInput;
             frontLeftWheelCollider.steerAngle = steerAngle;
             frontRightWheelCollider.steerAngle = steerAngle;
 
-            // Brake
+            // Brake (all wheels)
             float appliedBrake = brakeInput ? brakeTorque : 0f;
             frontLeftWheelCollider.brakeTorque = appliedBrake;
             frontRightWheelCollider.brakeTorque = appliedBrake;
             rearLeftWheelCollider.brakeTorque = appliedBrake;
             rearRightWheelCollider.brakeTorque = appliedBrake;
 
-            // Update wheel meshes
+            // Update wheel meshes for suspension visuals
             UpdateWheelPose(frontLeftWheelCollider, frontLeftWheelMesh);
             UpdateWheelPose(frontRightWheelCollider, frontRightWheelMesh);
             UpdateWheelPose(rearLeftWheelCollider, rearLeftWheelMesh);
