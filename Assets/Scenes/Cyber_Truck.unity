@@ -56023,6 +56023,7 @@ MonoBehaviour:
   maxMotorTorque: 400
   maxSteerAngle: 15
   brakeTorque: 2000
+  maxSpeed: 20
   moveAction:
     m_Name: Move
     m_Type: 0
@@ -86578,6 +86579,7 @@ MonoBehaviour:
   maxMotorTorque: 400
   maxSteerAngle: 15
   brakeTorque: 2000
+  maxSpeed: 20
   moveAction:
     m_Name: Move
     m_Type: 0
@@ -91816,6 +91818,7 @@ MonoBehaviour:
   maxMotorTorque: 400
   maxSteerAngle: 15
   brakeTorque: 2000
+  maxSpeed: 20
   moveAction:
     m_Name: Move
     m_Type: 0
