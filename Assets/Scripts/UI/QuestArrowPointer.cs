@@ -86,7 +86,7 @@ public class QuestArrowPointer : MonoBehaviour
         currentQuest = quest;
         currentStepIndex = quest.GetCurrentQuestStepIndex();
         
-        Debug.Log($"QuestArrowPointer: Activating for quest '{quest.info.displayName}' at step {currentStepIndex}");
+        Debug.Log($"QuestArrowPointer: Activating for quest '{quest.info.displayName}' (state: {quest.state}) at step {currentStepIndex}");
         
         SetTargetForCurrentStep();
     }
@@ -144,6 +144,15 @@ public class QuestArrowPointer : MonoBehaviour
         if (arrowVisual != null)
         {
             arrowVisual.SetActive(true);
+            
+            if (!arrowVisual.activeInHierarchy)
+            {
+                Debug.LogError($"QuestArrowPointer: Arrow cannot be displayed because a parent GameObject is inactive! Check your scene hierarchy and ensure all parents of '{arrowVisual.name}' are active.");
+            }
+        }
+        else
+        {
+            Debug.LogError("QuestArrowPointer: arrowVisual is NULL!");
         }
         
         Debug.Log($"QuestArrowPointer: Pointing to '{waypointObject.name}' (step {currentStepIndex}) for quest '{currentQuest.info.displayName}'");

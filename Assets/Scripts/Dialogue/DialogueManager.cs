@@ -120,7 +120,20 @@ public class DialogueManager : MonoBehaviour
     {
         Debug.Log($"<color=orange>DialogueManager: EnterDialogue called with knotName: '{knotName}'</color>");
         
-        // don't enter dialogue if we've already entered
+        InputEventContext currentContext = GameEventsManager.instance.inputEvents.inputEventContext;
+        
+        if (currentContext == InputEventContext.QUEST_LOG)
+        {
+            Debug.LogWarning("DialogueManager: Cannot start dialogue while Quest Log is open");
+            return;
+        }
+
+        if (currentContext == InputEventContext.TUTORIAL)
+        {
+            Debug.LogWarning("DialogueManager: Cannot start dialogue while Tutorial is open");
+            return;
+        }
+
         if (dialoguePlaying) 
         {
             Debug.LogWarning("DialogueManager: Already in dialogue, ignoring EnterDialogue call");
@@ -129,17 +142,13 @@ public class DialogueManager : MonoBehaviour
 
         dialoguePlaying = true;
 
-        // inform other parts of our system that we've started dialogue
         GameEventsManager.instance.dialogueEvents.DialogueStarted();
         Debug.Log("DialogueManager: Fired DialogueStarted event");
 
-        // freeze player movement
         GameEventsManager.instance.playerEvents.DisablePlayerMovement();
 
-        // input event context
         GameEventsManager.instance.inputEvents.ChangeInputEventContext(InputEventContext.DIALOGUE);
         
-        // jump to the knot
         if (!knotName.Equals(""))
         {
             story.ChoosePathString(knotName);
@@ -149,10 +158,8 @@ public class DialogueManager : MonoBehaviour
             Debug.LogWarning("Knot name was the empty string when entering dialogue.");
         }
 
-        // start listening for variables
         inkDialogueVariables.SyncVariablesAndStartListening(story);
 
-        // kick off the story
         ContinueOrExitStory();
     }
 
