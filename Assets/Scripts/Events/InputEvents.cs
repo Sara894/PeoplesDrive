@@ -38,4 +38,13 @@ public class InputEvents
             onQuestLogTogglePressed();
         }
     }
+
+    public event Action onTutorialTogglePressed;
+    public void TutorialTogglePressed()
+    {
+        if (onTutorialTogglePressed != null) 
+        {
+            onTutorialTogglePressed();
+        }
+    }
 }

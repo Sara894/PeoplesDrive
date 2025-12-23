@@ -47,6 +47,20 @@ public class QuestLogUI : MonoBehaviour
 
     private void QuestLogTogglePressed()
     {
+        InputEventContext currentContext = GameEventsManager.instance.inputEvents.inputEventContext;
+
+        if (currentContext == InputEventContext.DIALOGUE)
+        {
+            Debug.Log("QuestLogUI: Cannot open Quest Log while in dialogue");
+            return;
+        }
+
+        if (currentContext == InputEventContext.TUTORIAL)
+        {
+            Debug.Log("QuestLogUI: Cannot open Quest Log while in tutorial");
+            return;
+        }
+
         if (contentParent.activeInHierarchy)
         {
             HideUI();
@@ -60,6 +74,7 @@ public class QuestLogUI : MonoBehaviour
     private void ShowUI()
     {
         contentParent.SetActive(true);
+        GameEventsManager.instance.inputEvents.ChangeInputEventContext(InputEventContext.QUEST_LOG);
         GameEventsManager.instance.playerEvents.DisablePlayerMovement();
         
         acceptButton.SetActive(false);
@@ -73,6 +88,7 @@ public class QuestLogUI : MonoBehaviour
     private void HideUI()
     {
         contentParent.SetActive(false);
+        GameEventsManager.instance.inputEvents.ChangeInputEventContext(InputEventContext.DEFAULT);
         GameEventsManager.instance.playerEvents.EnablePlayerMovement();
         EventSystem.current.SetSelectedGameObject(null);
         
@@ -143,14 +159,25 @@ public class QuestLogUI : MonoBehaviour
             Debug.LogWarning("QuestLogUI: Could not find QuestHUDDisplay in scene!");
         }
 
-        QuestArrowPointer arrowPointer = FindObjectOfType<QuestArrowPointer>(true);
+        QuestArrowPointer[] allArrowPointers = FindObjectsOfType<QuestArrowPointer>(true);
+        QuestArrowPointer arrowPointer = null;
+        
+        foreach (QuestArrowPointer pointer in allArrowPointers)
+        {
+            if (pointer.gameObject.activeInHierarchy)
+            {
+                arrowPointer = pointer;
+                break;
+            }
+        }
+        
         if (arrowPointer != null)
         {
             arrowPointer.ActivateArrowForQuest(currentlySelectedQuest);
         }
         else
         {
-            Debug.LogWarning("QuestLogUI: Could not find QuestArrowPointer in scene!");
+            Debug.LogWarning("QuestLogUI: Could not find active QuestArrowPointer in scene!");
         }
 
         HideUI();

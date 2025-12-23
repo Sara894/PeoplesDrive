@@ -5,5 +5,7 @@ using UnityEngine;
 public enum InputEventContext
 {
     DEFAULT,
-    DIALOGUE
+    DIALOGUE,
+    QUEST_LOG,
+    TUTORIAL
 }
