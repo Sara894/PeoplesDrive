@@ -1,12 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PauseManager : MonoBehaviour
 {
     [Header("UI")]
     [SerializeField] private GameObject pauseCanvas;
     [SerializeField] private Button resumeButton;
+    [SerializeField] private Button mainMenuButton;
 
     [Header("Input Actions for UI")]
     public InputActionReference pauseAction;
@@ -19,6 +21,7 @@ public class PauseManager : MonoBehaviour
         pauseAction.action.performed += OnPause;
 
         resumeButton.onClick.AddListener(ResumeGame);
+        mainMenuButton.onClick.AddListener(BackToMainMenu);
     }
 
     private void OnDisable()
@@ -27,6 +30,7 @@ public class PauseManager : MonoBehaviour
         pauseAction.action.Disable();
 
         resumeButton.onClick.RemoveListener(ResumeGame);
+        mainMenuButton.onClick.RemoveListener(BackToMainMenu);
     }
 
     private void OnPause(InputAction.CallbackContext ctx)
@@ -51,6 +55,13 @@ public class PauseManager : MonoBehaviour
         AudioListener.pause = false;
         pauseCanvas.SetActive(false);
         isPaused = false;
+    }
+
+    public void BackToMainMenu()
+    {
+        Time.timeScale = 1f;
+        AudioListener.pause = false;
+        SceneManager.LoadScene("MainMenu");
     }
 
     private void OnDestroy()
