@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using TMPro;
 
 namespace Ezereal
 {
@@ -18,18 +20,21 @@ namespace Ezereal
         public Transform rearRightWheelMesh;
 
         [Header("Settings")]
-        public float maxMotorTorque = 400f;   // Lower for gentle acceleration
-        public float maxSteerAngle = 5f;      // Lower for gentle steering
+        public float maxMotorTorque = 200f;
+        public float maxSteerAngle = 5f;
         public float brakeTorque = 2000f;
+        public float maxSpeed = 50f;
 
-        public InputAction moveAction;   // Vector2: y=forward/back, x=left/right
-        public InputAction brakeAction;  // Button: brake
+        public InputAction moveAction;
+        public InputAction brakeAction;
 
         private float motorInput;
         private float steerInput;
         private bool brakeInput;
 
         private PlayerInput playerInput;
+
+        public TMPro.TextMeshProUGUI speedText;
 
         private void Awake()
         {
@@ -53,33 +58,49 @@ namespace Ezereal
         private void Update()
         {
             Vector2 move = moveAction != null ? moveAction.ReadValue<Vector2>() : Vector2.zero;
-            motorInput = move.y;   // W/S or Up/Down
-            steerInput = move.x;   // A/D or Left/Right
+            motorInput = move.y; 
+            steerInput = move.x;
             brakeInput = brakeAction != null && brakeAction.ReadValue<float>() > 0.5f;
+
+            if (speedText != null)
+            {
+                float speedKmh = vehicleRB.velocity.magnitude * 3.6f;
+                speedText.text = $"{speedKmh:F0} km/h";
+            }
         }
 
         private void FixedUpdate()
         {
-            // Motor torque (all wheels for simplicity)
-            float motor = maxMotorTorque * motorInput;
+            float speed = vehicleRB.velocity.magnitude;
+
+            float motor = 0f;
+            if (Mathf.Abs(motorInput) > 0.01f && speed < maxSpeed)
+            {
+                motor = maxMotorTorque * motorInput;
+            }
             frontLeftWheelCollider.motorTorque = motor;
             frontRightWheelCollider.motorTorque = motor;
             rearLeftWheelCollider.motorTorque = motor;
             rearRightWheelCollider.motorTorque = motor;
 
-            // Steering (front wheels only)
             float steerAngle = maxSteerAngle * steerInput;
             frontLeftWheelCollider.steerAngle = steerAngle;
             frontRightWheelCollider.steerAngle = steerAngle;
 
-            // Brake (all wheels)
-            float appliedBrake = brakeInput ? brakeTorque : 0f;
+            float appliedBrake = 0f;
+            if (brakeInput)
+            {
+                appliedBrake = brakeTorque;
+            }
+            else if (Mathf.Approximately(motorInput, 0f))
+            {
+                appliedBrake = brakeTorque;
+            }
             frontLeftWheelCollider.brakeTorque = appliedBrake;
             frontRightWheelCollider.brakeTorque = appliedBrake;
             rearLeftWheelCollider.brakeTorque = appliedBrake;
             rearRightWheelCollider.brakeTorque = appliedBrake;
 
-            // Update wheel meshes for suspension visuals
             UpdateWheelPose(frontLeftWheelCollider, frontLeftWheelMesh);
             UpdateWheelPose(frontRightWheelCollider, frontRightWheelMesh);
             UpdateWheelPose(rearLeftWheelCollider, rearLeftWheelMesh);

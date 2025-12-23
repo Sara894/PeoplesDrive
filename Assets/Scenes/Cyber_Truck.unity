@@ -23469,7 +23469,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &641514512765584209
 Transform:
   m_ObjectHideFlags: 0
@@ -56023,6 +56023,7 @@ MonoBehaviour:
   maxMotorTorque: 400
   maxSteerAngle: 15
   brakeTorque: 2000
+  maxSpeed: 10
   moveAction:
     m_Name: Move
     m_Type: 0
@@ -56041,6 +56042,7 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  speedText: {fileID: 0}
 --- !u!33 &4210055944463996868
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -80193,7 +80195,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6876163507267209832
 Transform:
   m_ObjectHideFlags: 0
@@ -86578,6 +86580,7 @@ MonoBehaviour:
   maxMotorTorque: 400
   maxSteerAngle: 15
   brakeTorque: 2000
+  maxSpeed: 10
   moveAction:
     m_Name: Move
     m_Type: 0
@@ -86596,6 +86599,7 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  speedText: {fileID: 0}
 --- !u!222 &7692917153022434528
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -91816,6 +91820,7 @@ MonoBehaviour:
   maxMotorTorque: 400
   maxSteerAngle: 15
   brakeTorque: 2000
+  maxSpeed: 30
   moveAction:
     m_Name: Move
     m_Type: 0
@@ -91834,6 +91839,7 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  speedText: {fileID: 8251892108293185575}
 --- !u!114 &8213366779055562792
 MonoBehaviour:
   m_ObjectHideFlags: 0
