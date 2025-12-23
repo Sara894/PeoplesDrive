@@ -88,12 +88,21 @@ public class DeliveryCheckPoints : QuestStep
         checkpointReached = true;
         
         AddTimeBonusToQuest();
+        PlayCheckpointSound();
         
         UpdateQuestStatus($"✓ {checkpointNumberString} checkpoint reached! +{timeBonusSeconds}s");
         
         Debug.Log($"DeliveryCheckPoints: {checkpointNumberString} checkpoint completed!");
         
         FinishQuestStep();
+    }
+    
+    private void PlayCheckpointSound()
+    {
+        if (QuestAudioManager.instance != null)
+        {
+            QuestAudioManager.instance.PlayCheckpointSound();
+        }
     }
     
     private void AddTimeBonusToQuest()
