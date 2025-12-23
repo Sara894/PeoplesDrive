@@ -9,24 +9,39 @@ public class MainMenuManager : MonoBehaviour
     [Header("Buttons")]
     [SerializeField] Button startGameButton;
     [SerializeField] Button exitGameButton;
-    [SerializeField] Button settings;
+    [SerializeField] Button toggleMusicButton;
     [SerializeField] Button yesExitGame;
     [SerializeField] Button noExitGame;
-    [SerializeField] Button closeButtonSettings;
+    [SerializeField] Button creditsButton;
+    [SerializeField] Button exitCreditsButton;
 
     [Header("UI Panels")]
-    [SerializeField] GameObject settingsUI;
     [SerializeField] GameObject mainMenuUI;
     [SerializeField] GameObject exitGameUI;
-    [SerializeField] GameObject loadingScreenUI;
+    [SerializeField] GameObject creditsCanvas;
+    [SerializeField] GameObject thankYouImage;
+
+    [Header("Safety Screen")]
+    [SerializeField] GameObject safetyCanvas;
+    [SerializeField] float safetyScreenDuration = 3f;
 
     [Header("Input Actions for UI")]
     public InputActionReference cancelAction;
+
+    private bool isMusicOn = true;
 
     private void OnEnable()
     {
         cancelAction.action.Enable();
         cancelAction.action.performed += OnCancel;
+
+        startGameButton.onClick.AddListener(LoadSinglePlayer);
+        exitGameButton.onClick.AddListener(OpenExitGameCanvas);
+        yesExitGame.onClick.AddListener(ShowThankYouAndExit);
+        noExitGame.onClick.AddListener(OpenMainMenu);
+        toggleMusicButton.onClick.AddListener(ToggleMusic);
+        creditsButton.onClick.AddListener(OpenCreditsCanvas);
+        exitCreditsButton.onClick.AddListener(CloseCreditsCanvas);
     }
 
     private void OnDisable()
@@ -37,18 +52,16 @@ public class MainMenuManager : MonoBehaviour
 
     private void OnCancel(InputAction.CallbackContext ctx)
     {
-        if (loadingScreenUI.activeSelf)
-            return;
 
-        if (settingsUI.activeSelf)
+        if (exitGameUI.activeSelf)
         {
             OpenMainMenu();
             return;
         }
 
-        if (exitGameUI.activeSelf)
+        if (creditsCanvas != null && creditsCanvas.activeSelf)
         {
-            OpenMainMenu();
+            CloseCreditsCanvas();
             return;
         }
 
@@ -66,14 +79,18 @@ public class MainMenuManager : MonoBehaviour
 
     IEnumerator LoadSinglePlayerCoroutine()
     {
-        loadingScreenUI.SetActive(true);
         mainMenuUI.SetActive(false);
-        settingsUI.SetActive(false);
         exitGameUI.SetActive(false);
+        creditsCanvas?.SetActive(false);
 
-        yield return new WaitForSeconds(2f);
+        if (safetyCanvas != null)
+        {
+            safetyCanvas.SetActive(true);
+            yield return new WaitForSeconds(safetyScreenDuration);
+            safetyCanvas.SetActive(false);
+        }
 
-        AsyncOperation operation = SceneManager.LoadSceneAsync("ControlsPopUp");
+        AsyncOperation operation = SceneManager.LoadSceneAsync("Cyber_Truck");
         operation.allowSceneActivation = true;
 
         yield return new WaitUntil(() => operation.isDone);
@@ -81,27 +98,47 @@ public class MainMenuManager : MonoBehaviour
 
     public void OpenExitGameCanvas()
     {
-        settingsUI.SetActive(false);
         mainMenuUI.SetActive(false);
         exitGameUI.SetActive(true);
-    }
-
-    public void OpenSettings()
-    {
-        settingsUI.SetActive(true);
-        mainMenuUI.SetActive(false);
-        exitGameUI.SetActive(false);
+        creditsCanvas?.SetActive(false);
     }
 
     public void OpenMainMenu()
     {
         exitGameUI.SetActive(false);
-        settingsUI.SetActive(false);
+        mainMenuUI.SetActive(true);
+        creditsCanvas?.SetActive(false);
+        thankYouImage?.SetActive(false);
+    }
+
+    // NEW: Credits logic
+    public void OpenCreditsCanvas()
+    {
+        mainMenuUI.SetActive(false);
+        creditsCanvas?.SetActive(true);
+    }
+
+    public void CloseCreditsCanvas()
+    {
+        creditsCanvas?.SetActive(false);
         mainMenuUI.SetActive(true);
     }
 
-    public void ExitGame()
+    private void ToggleMusic()
     {
+        isMusicOn = !isMusicOn;
+        // AudioListener.pause = !isMusicOn;
+        Debug.Log("Music is now " + (isMusicOn ? "ON" : "OFF"));
+    }
+
+    // NEW: Show thank you image and quit
+    public void ShowThankYouAndExit()
+    {
+        exitGameUI.SetActive(false);
+        thankYouImage?.SetActive(true);
+        Debug.Log("Thank you for playing!");
+
         Application.Quit();
+        Debug.Log("Game Closed");
     }
 }

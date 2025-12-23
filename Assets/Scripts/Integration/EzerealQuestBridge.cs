@@ -14,7 +14,6 @@ public class EzerealQuestBridge : MonoBehaviour
     [SerializeField] private bool lockInputOnStop = true;
 
     private bool isMovementLocked = false;
-    private bool wasStarted = false;
     private RigidbodyConstraints originalConstraints;
 
     private void Awake()
@@ -74,12 +73,6 @@ public class EzerealQuestBridge : MonoBehaviour
 
         isMovementLocked = true;
 
-        if (carController != null)
-        {
-            wasStarted = carController.isStarted;
-            carController.isStarted = false;
-        }
-
         if (lockInputOnStop && playerInput != null)
         {
             playerInput.DeactivateInput();
@@ -100,11 +93,6 @@ public class EzerealQuestBridge : MonoBehaviour
         if (!isMovementLocked) return;
 
         isMovementLocked = false;
-
-        if (carController != null)
-        {
-            carController.isStarted = wasStarted;
-        }
 
         if (lockInputOnStop && playerInput != null)
         {
