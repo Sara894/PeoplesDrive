@@ -53762,7 +53762,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &6018792365539116760
 GameObject:
   m_ObjectHideFlags: 0
@@ -67635,6 +67635,7 @@ MonoBehaviour:
   pauseCanvas: {fileID: 6011902444835498471}
   resumeButton: {fileID: 3751332664866124443}
   mainMenuButton: {fileID: 1380090309}
+  pauseButton: {fileID: 913044741}
   pauseAction: {fileID: -396683745695792286, guid: f008bd9337e5eb44bb8426b3fd99c406, type: 3}
 --- !u!1 &8245036273314065487
 GameObject:

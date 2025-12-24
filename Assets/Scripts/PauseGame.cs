@@ -9,6 +9,7 @@ public class PauseManager : MonoBehaviour
     [SerializeField] private GameObject pauseCanvas;
     [SerializeField] private Button resumeButton;
     [SerializeField] private Button mainMenuButton;
+    [SerializeField] private Button pauseButton;
 
     [Header("Input Actions for UI")]
     public InputActionReference pauseAction;
@@ -22,6 +23,7 @@ public class PauseManager : MonoBehaviour
 
         resumeButton.onClick.AddListener(ResumeGame);
         mainMenuButton.onClick.AddListener(BackToMainMenu);
+        pauseButton.onClick.AddListener(PauseGame);
     }
 
     private void OnDisable()
@@ -31,6 +33,7 @@ public class PauseManager : MonoBehaviour
 
         resumeButton.onClick.RemoveListener(ResumeGame);
         mainMenuButton.onClick.RemoveListener(BackToMainMenu);
+        pauseButton.onClick.RemoveListener(PauseGame);
     }
 
     private void OnPause(InputAction.CallbackContext ctx)
@@ -41,7 +44,7 @@ public class PauseManager : MonoBehaviour
             PauseGame();
     }
 
-    private void PauseGame()
+    public void PauseGame()
     {
         Time.timeScale = 0f;
         AudioListener.pause = true;
