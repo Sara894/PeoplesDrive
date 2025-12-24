@@ -9,7 +9,6 @@ public class MainMenuManager : MonoBehaviour
     [Header("Buttons")]
     [SerializeField] Button startGameButton;
     [SerializeField] Button exitGameButton;
-    [SerializeField] Button toggleMusicButton;
     [SerializeField] Button yesExitGame;
     [SerializeField] Button noExitGame;
     [SerializeField] Button creditsButton;
@@ -28,8 +27,6 @@ public class MainMenuManager : MonoBehaviour
     [Header("Input Actions for UI")]
     public InputActionReference cancelAction;
 
-    private bool isMusicOn = true;
-
     private void OnEnable()
     {
         cancelAction.action.Enable();
@@ -39,7 +36,6 @@ public class MainMenuManager : MonoBehaviour
         exitGameButton.onClick.AddListener(OpenExitGameCanvas);
         yesExitGame.onClick.AddListener(ShowThankYouAndExit);
         noExitGame.onClick.AddListener(OpenMainMenu);
-        toggleMusicButton.onClick.AddListener(ToggleMusic);
         creditsButton.onClick.AddListener(OpenCreditsCanvas);
         exitCreditsButton.onClick.AddListener(CloseCreditsCanvas);
     }
@@ -121,13 +117,6 @@ public class MainMenuManager : MonoBehaviour
     {
         creditsCanvas?.SetActive(false);
         mainMenuUI.SetActive(true);
-    }
-
-    private void ToggleMusic()
-    {
-        isMusicOn = !isMusicOn;
-        // AudioListener.pause = !isMusicOn;
-        Debug.Log("Music is now " + (isMusicOn ? "ON" : "OFF"));
     }
 
     public void ShowThankYouAndExit()
