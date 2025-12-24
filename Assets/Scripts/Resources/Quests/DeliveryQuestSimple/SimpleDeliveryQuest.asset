@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SimpleDeliveryQuest
   m_EditorClassIdentifier: 
   <id>k__BackingField: SimpleDeliveryQuest
-  displayName: SimpleDelivery
+  displayName: Food Delivery
   levelRequiredToUnlock: 0
   questPrerequisites: []
   questStepPrefabs:

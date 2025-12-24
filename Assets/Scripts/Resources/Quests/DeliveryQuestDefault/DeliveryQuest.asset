@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DeliveryQuest
   m_EditorClassIdentifier: 
   <id>k__BackingField: DeliveryQuest
-  displayName: DeliverBox
+  displayName: Medical Support Delivery
   levelRequiredToUnlock: 0
   questPrerequisites:
   - {fileID: 11400000, guid: b3026f05f55d38c479d9a257d5ed5c1d, type: 2}

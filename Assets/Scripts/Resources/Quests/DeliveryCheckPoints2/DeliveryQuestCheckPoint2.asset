@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DeliveryQuestCheckPoint2
   m_EditorClassIdentifier: 
   <id>k__BackingField: DeliveryQuestCheckPoint2
-  displayName: DeliveryBoxThroughCheckPoints2
+  displayName: Water Bottles Delivery
   levelRequiredToUnlock: 0
   questPrerequisites: []
   questStepPrefabs:
