@@ -62,7 +62,7 @@ namespace Ezereal
             steerInput = move.x;
             brakeInput = brakeAction != null && brakeAction.ReadValue<float>() > 0.5f;
 
-            if (speedText != null)
+             if (speedText != null)
             {
                 float speedKmh = vehicleRB.velocity.magnitude * 3.6f;
                 speedText.text = $"{speedKmh:F0} km/h";
@@ -76,7 +76,9 @@ namespace Ezereal
             float motor = 0f;
             if (Mathf.Abs(motorInput) > 0.01f && speed < maxSpeed)
             {
-                motor = maxMotorTorque * motorInput;
+                // High torque at low speed, low torque at high speed
+                float accelFactor = Mathf.Lerp(1.5f, 0.1f, speed / maxSpeed);
+                motor = maxMotorTorque * motorInput * accelFactor;
             }
             frontLeftWheelCollider.motorTorque = motor;
             frontRightWheelCollider.motorTorque = motor;

@@ -31847,6 +31847,7 @@ GameObject:
   - component: {fileID: 8258523483645631431}
   - component: {fileID: 3899620910249090602}
   - component: {fileID: 8938913253463517862}
+  - component: {fileID: 8938913253463517863}
   m_Layer: 0
   m_Name: ' Car Controller'
   m_TagString: Untagged
@@ -67518,6 +67519,7 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  speedText: {fileID: 0}
 --- !u!114 &8213366779055562792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71359,6 +71361,20 @@ MonoBehaviour:
   vehicleRB: {fileID: 7799763293780297497}
   lockPhysicsOnStop: 1
   lockInputOnStop: 1
+--- !u!114 &8938913253463517863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2525250404632546587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b0b5155f734f2648a6b0ccbfa3d45dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upsideDownThreshold: 0.1
+  timeUpsideDown: 1
 --- !u!114 &8940945063869505984
 MonoBehaviour:
   m_ObjectHideFlags: 0
