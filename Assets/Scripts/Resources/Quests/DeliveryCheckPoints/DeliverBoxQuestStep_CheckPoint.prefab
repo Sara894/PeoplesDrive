@@ -9,6 +9,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -4855626477089266027, guid: 375a603708730724fa4637072f156e28, type: 3}
+      propertyPath: triggerSize
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: -4855626477089266027, guid: 375a603708730724fa4637072f156e28, type: 3}
       propertyPath: deliveryPointName
       value: QuestPointFCheck
       objectReference: {fileID: 0}

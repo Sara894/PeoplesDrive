@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: DeliveryBox
-  triggerSize: 5
+  triggerSize: 10
   deliveryPointName: QuestPointF
   showCharacterOnDelivery: 1
 --- !u!65 &6254903333160902116
