@@ -25,6 +25,7 @@ public class QuestLogUI : MonoBehaviour
     {
         GameEventsManager.instance.inputEvents.onQuestLogTogglePressed += QuestLogTogglePressed;
         GameEventsManager.instance.questEvents.onQuestStateChange += QuestStateChange;
+        GameEventsManager.instance.inputEvents.onSubmitPressed += OnSubmitPressed;
 
         Button acceptBtn = acceptButton.GetComponent<Button>();
         if (acceptBtn != null)
@@ -37,6 +38,8 @@ public class QuestLogUI : MonoBehaviour
     {
         GameEventsManager.instance.inputEvents.onQuestLogTogglePressed -= QuestLogTogglePressed;
         GameEventsManager.instance.questEvents.onQuestStateChange -= QuestStateChange;
+        GameEventsManager.instance.inputEvents.onSubmitPressed -= OnSubmitPressed;
+
 
         Button acceptBtn = acceptButton.GetComponent<Button>();
         if (acceptBtn != null)
@@ -134,7 +137,14 @@ public class QuestLogUI : MonoBehaviour
 
         bool canAccept = (quest.state == QuestState.CAN_START) && !QuestManager.instance.HasActiveQuest();
         acceptButton.SetActive(canAccept);
-        
+        if (canAccept)
+        {
+            Button btn = acceptButton.GetComponent<Button>();
+            btn.interactable = true;
+
+            EventSystem.current.SetSelectedGameObject(acceptButton);
+        }
+
         if (quest.state == QuestState.CAN_START && QuestManager.instance.HasActiveQuest())
         {
             questStatusText.text += "\n\n<color=red>Complete your active quest first!</color>";
@@ -182,4 +192,20 @@ public class QuestLogUI : MonoBehaviour
 
         HideUI();
     }
+    private void OnSubmitPressed(InputEventContext context)
+    {
+        if (context != InputEventContext.QUEST_LOG)
+            return;
+
+        if (!contentParent.activeInHierarchy)
+            return;
+
+        if (!acceptButton.activeInHierarchy)
+            return;
+
+        Button btn = acceptButton.GetComponent<Button>();
+        btn.onClick.Invoke();
+    }
+
+
 }
