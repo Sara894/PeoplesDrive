@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DeliveryCheckPointsQuest
   m_EditorClassIdentifier: 
   <id>k__BackingField: DeliveryCheckPointsQuest
-  displayName: Clothes Delivery
+  displayName: Soup Delivery
   levelRequiredToUnlock: 0
   questPrerequisites: []
   questStepPrefabs:

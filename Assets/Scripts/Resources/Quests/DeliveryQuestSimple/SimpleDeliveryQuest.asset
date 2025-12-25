@@ -24,4 +24,4 @@ MonoBehaviour:
   - QuestPointSimpleF
   timeLimitInSeconds: 0
   moneyReward: 20
-  experienceCommunityReward: 15
+  experienceCommunityReward: 25

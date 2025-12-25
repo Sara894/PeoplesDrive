@@ -29,7 +29,7 @@ Come back once you've made all the necessary deliveries.
 -> END
 
 = canStart
-Hey you're the delivery guy right? Can you take this package and deliver it to this location?
+Driver, I need you to deliver this medicine. Make haste and good luck!
 * [Yes]
     Great! Thank you this will help out the community a lot.
     ~ StartQuest(DeliveryQuest)
@@ -58,16 +58,16 @@ Thank you for the delivery.
 }
 
 = canFinish
-Thank you for delivering the package! You've done us a great service.
-Before you go, can I ask for your opinion? The community is voting on what to improve next in the neighborhood.
-* [Improve the roads]
-    That's practical thinking. Better roads mean safer deliveries for everyone!
+Thank you so much for bringing the medicine. We managed to save the patient just in time.
+Now that the crisis is over, the neighborhood is discussing how to prevent situations like this.
+* [Improve local clinics]
+    Better equipment and space would let us treat more people.
     -> questComplete
-* [Add more street lights]
-    Safety first, I like it. More lights will help drivers navigate at night.
+* [Faster emergency routes]
+    Clearer roads could save lives in emergencies..
     -> questComplete
-* [Build a community center]
-    Bringing people together, I respect that. We could use a place to gather.
+* [Community health volunteers]
+    Training locals to help in emergencies could make a big difference.
     -> questComplete
 
 = questComplete
@@ -96,7 +96,7 @@ Hm? What do you want? I wasn't expecting any deliveries.
 = requirementsNotMet
 -> END
 = canStart
-I need you to deliver this package through three checkpoints. You'll get bonus time at each checkpoint!
+Hello, driver. I need you to deliver this hot soup to the children’s shelter. Please try to get there quickly so it doesn’t get cold.
 + [Accept quest]
      Great! Pick up the box and drive through all three checkpoints before delivering it!
     ~ StartQuest(DeliveryCheckPointsQuest)
@@ -133,16 +133,16 @@ What do you want?
 -> END
 
 = canFinish
-Perfect delivery! You hit all the checkpoints in time!
-Hey, quick question - we're planning a community event. What would you like to see?
-* [Street racing tournament]
-    Now that's exciting! Fast cars, friendly competition. I'm in!
+Thank you, driver. Be sure to stop by for some soup next time.
+Since you help so many families, we’d love your thoughts on how to support children in this area.
+* [Improve the shelter building]
+    A warmer, safer place would mean a lot to the kids.
     -> questComplete
-* [Food truck festival]
-    Delicious idea! Nothing brings people together like good food.
+* [Add a small outdoor play area]
+    Fresh air and space to play helps them feel like kids again.
     -> questComplete
-* [Outdoor movie night]
-    Classic choice! A great way to relax after a long day of deliveries.
+* [Provide school supplies]
+    Giving them tools to learn gives them hope for the future.
     -> questComplete
 
 = questComplete
@@ -173,7 +173,7 @@ Come back once you've made all the necessary deliveries for today.
 -> END
 
 = canStart
-Hey! I need you to deliver this package. It's not urgent, so take your time!
+Hello, dear. It’s so nice to see you. Today, I need you to deliver this food to the family you help once every week. It's not urgent, so take your time!
 + [Accept quest]
     Great! Pick up the box and deliver it when you're ready.
     ~ StartQuest(SimpleDeliveryQuest)
@@ -206,16 +206,16 @@ What do you need?
 }
 
 = canFinish
-Perfect! Thanks for bringing this over!
-Oh, one more thing - the neighborhood council is discussing traffic improvements. What's your take?
-* [Add speed bumps for safety]
-    Good thinking. Slowing down cars will protect pedestrians and kids.
+Thank you so much.Without you, we wouldn’t be able to get by like this.
+You see so many parts of the neighborhood… maybe you could help us decide what to focus on next. What's your take?
+* [Improve the roads]
+    Better roads would make it easier for deliveries like yours to reach everyone safely.
     -> questComplete
-* [Widen the main road]
-    More space means less congestion. Smart for delivery drivers like you!
+* [Add more street lights]
+    More light at night would help protect families and keep the streets safer.
     -> questComplete
-* [Install traffic lights at intersections]
-    Organization is key. Traffic lights will keep things flowing smoothly.
+* [Build a small community pantry]
+    A shared pantry would help people who can’t always afford enough food.
     -> questComplete
 
 = questComplete
@@ -245,7 +245,7 @@ I'm not expecting anything right now.
 -> END
 
 = canStart
-I need you to deliver another package through three checkpoints. You'll get bonus time at each checkpoint!
+Hello, dear. How are you today? I need you to deliver these clothes and tents to the homeless. Please try to get there before it gets dark so they can set everything up in time.!
 + [Accept quest]
     Great! Pick up the box and drive through all three checkpoints before delivering it!
     ~ StartQuest(DeliveryQuestCheckPoint2)
@@ -281,16 +281,16 @@ What do you want?
 -> END
 
 = canFinish
-Perfect delivery! You hit all the checkpoints in time!
-Real quick - we're planning neighborhood improvements. What should we prioritize?
-* [Plant more trees and green spaces]
-    Environmental choice! Trees make the streets more pleasant and cleaner air for everyone.
+It may not be a real roof, but it’s something to keep me safe. Thank you… truly.
+People like you remind us that we’re not invisible. If you could change one thing here, what would it be?
+* [Build temporary housing]
+   A place to sleep would give people a chance to rebuild.
     -> questComplete
-* [Repair damaged sidewalks]
-    Practical and necessary. Safe walkways benefit the whole community.
+* [Create protected green shelters]
+    Safe, clean spaces can offer dignity and comfort.
     -> questComplete
-* [Add bike lanes]
-    Forward thinking! Alternative transportation options are always good.
+* [Expand community outreach]
+    More people helping means fewer people being left behind.
     -> questComplete
 
 = questComplete
