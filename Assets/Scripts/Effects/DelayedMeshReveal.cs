@@ -3,42 +3,31 @@ using UnityEngine;
 
 public class DelayedMeshReveal : MonoBehaviour
 {
+    [Header("Character to Reveal")]
+    [Tooltip("The character GameObject to activate after a delay")]
+    [SerializeField] private GameObject characterToReveal;
+
     [Header("Smoke Effect")]
-    [Tooltip("Optional: Smoke effect GameObject to activate when this character spawns")]
+    [Tooltip("Optional: Smoke effect GameObject to activate when character spawns")]
     [SerializeField] private GameObject smokeEffect;
 
     [Header("Timing Settings")]
-    [Tooltip("Delay in seconds before the mesh appears")]
+    [Tooltip("Delay in seconds before the character appears")]
     [SerializeField] private float revealDelay = 0.5f;
-
-    [Header("Mesh Settings")]
-    [Tooltip("If true, finds all child MeshRenderers. If false, only uses MeshRenderers on this GameObject.")]
-    [SerializeField] private bool includeChildren = true;
 
     [Header("Debug")]
     [SerializeField] private bool debugMode = false;
 
-    private MeshRenderer[] meshRenderers;
-
-    private void Awake()
-    {
-        if (includeChildren)
-        {
-            meshRenderers = GetComponentsInChildren<MeshRenderer>(true);
-        }
-        else
-        {
-            meshRenderers = GetComponents<MeshRenderer>();
-        }
-
-        if (meshRenderers.Length == 0)
-        {
-            Debug.LogWarning($"DelayedMeshReveal on '{gameObject.name}': No MeshRenderers found!");
-        }
-    }
-
     private void OnEnable()
     {
+        if (characterToReveal == null)
+        {
+            Debug.LogWarning($"DelayedMeshReveal on '{gameObject.name}': No character assigned to reveal!");
+            return;
+        }
+
+        characterToReveal.SetActive(false);
+
         if (smokeEffect != null)
         {
             smokeEffect.SetActive(true);
@@ -48,16 +37,8 @@ public class DelayedMeshReveal : MonoBehaviour
                 Debug.Log($"DelayedMeshReveal: Activated smoke effect '{smokeEffect.name}'");
             }
         }
-        
-        foreach (MeshRenderer renderer in meshRenderers)
-        {
-            if (renderer != null)
-            {
-                renderer.enabled = false;
-            }
-        }
 
-        StartCoroutine(RevealMeshAfterDelay());
+        StartCoroutine(RevealCharacterAfterDelay());
     }
 
     private void OnDisable()
@@ -73,26 +54,23 @@ public class DelayedMeshReveal : MonoBehaviour
         }
     }
 
-    private IEnumerator RevealMeshAfterDelay()
+    private IEnumerator RevealCharacterAfterDelay()
     {
         if (debugMode)
         {
-            Debug.Log($"DelayedMeshReveal: Hiding {meshRenderers.Length} mesh(es), revealing in {revealDelay}s");
+            Debug.Log($"DelayedMeshReveal: Character hidden, revealing in {revealDelay}s");
         }
 
         yield return new WaitForSeconds(revealDelay);
 
-        foreach (MeshRenderer renderer in meshRenderers)
+        if (characterToReveal != null)
         {
-            if (renderer != null)
-            {
-                renderer.enabled = true;
-            }
-        }
+            characterToReveal.SetActive(true);
 
-        if (debugMode)
-        {
-            Debug.Log($"DelayedMeshReveal: Revealed {meshRenderers.Length} mesh(es)");
+            if (debugMode)
+            {
+                Debug.Log($"DelayedMeshReveal: Revealed character '{characterToReveal.name}'");
+            }
         }
     }
 
