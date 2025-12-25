@@ -36081,6 +36081,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Kukicki (27)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1f4ddde5851585446aa8e505f62ce7c5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2834455701579547633, guid: 1f4ddde5851585446aa8e505f62ce7c5, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -90375,7 +90379,7 @@ RectTransform:
   m_GameObject: {fileID: 6814399468013773539}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.07, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1793075746305452349}
@@ -96023,7 +96027,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1438455965719766618
 Transform:
   m_ObjectHideFlags: 0
@@ -98168,7 +98172,7 @@ RectTransform:
   m_GameObject: {fileID: 2410644510053907104}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.7, y: 1, z: 1}
+  m_LocalScale: {x: 0.85, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 489932463258875999}
@@ -116726,7 +116730,7 @@ RectTransform:
   m_GameObject: {fileID: 8664880032958274467}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.7, y: 1, z: 1}
+  m_LocalScale: {x: 0.85, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6883493548031891804}
@@ -122295,7 +122299,7 @@ RectTransform:
   m_GameObject: {fileID: 1598945066273089855}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.07, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5783550745062662881}
@@ -123039,7 +123043,7 @@ RectTransform:
   m_GameObject: {fileID: 7626089841427640700}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.7, y: 1, z: 1}
+  m_LocalScale: {x: 0.85, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5651334582998037379}
@@ -130789,7 +130793,7 @@ RectTransform:
   m_GameObject: {fileID: 565797851289486304}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.07, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4731536047979087934}
@@ -131306,7 +131310,7 @@ RectTransform:
   m_GameObject: {fileID: 6483686203279908819}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.7, y: 1, z: 1}
+  m_LocalScale: {x: 0.85, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9097953691090132268}
@@ -138662,6 +138666,8 @@ MonoBehaviour:
   mainMenuButton: {fileID: 1380090309}
   pauseButton: {fileID: 913044741}
   pauseAction: {fileID: -396683745695792286, guid: f008bd9337e5eb44bb8426b3fd99c406, type: 3}
+  navigateAction: {fileID: 0}
+  submitAction: {fileID: 0}
 --- !u!1 &8245036273314065487
 GameObject:
   m_ObjectHideFlags: 0
@@ -143479,7 +143485,7 @@ RectTransform:
   m_GameObject: {fileID: 2747026865868359568}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.07, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6948124807833324622}
