@@ -138666,8 +138666,8 @@ MonoBehaviour:
   mainMenuButton: {fileID: 1380090309}
   pauseButton: {fileID: 913044741}
   pauseAction: {fileID: -396683745695792286, guid: f008bd9337e5eb44bb8426b3fd99c406, type: 3}
-  navigateAction: {fileID: 0}
-  submitAction: {fileID: 0}
+  navigateAction: {fileID: -3637397699941233079, guid: f008bd9337e5eb44bb8426b3fd99c406, type: 3}
+  submitAction: {fileID: 8968430841537221897, guid: f008bd9337e5eb44bb8426b3fd99c406, type: 3}
 --- !u!1 &8245036273314065487
 GameObject:
   m_ObjectHideFlags: 0
