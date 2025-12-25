@@ -13,13 +13,7 @@ public class UIReminderSystem : MonoBehaviour
     [SerializeField] private float blinkOffDuration = 0.5f;
     [SerializeField] private int numberOfBlinks = 3;
 
-    [Header("Quest Log Repeat Settings")]
-    [SerializeField] private float questLogRepeatMinInterval = 15f;
-    [SerializeField] private float questLogRepeatMaxInterval = 20f;
-    [SerializeField] private float initialQuestLogDelay = 5f;
-
     private bool isQuestLogReminderActive = false;
-    private Coroutine questLogReminderCoroutine;
 
     private void Start()
     {
@@ -44,7 +38,7 @@ public class UIReminderSystem : MonoBehaviour
 
         GameEventsManager.instance.questEvents.onStartQuest += OnQuestStateChanged;
         GameEventsManager.instance.questEvents.onAdvanceQuest += OnQuestStateChanged;
-        GameEventsManager.instance.questEvents.onFinishQuest += OnQuestStateChanged;
+        GameEventsManager.instance.questEvents.onFinishQuest += OnQuestFinished;
         GameEventsManager.instance.dialogueEvents.onDialogueStarted += OnDialogueStarted;
         GameEventsManager.instance.dialogueEvents.onDialogueFinished += OnDialogueFinished;
     }
@@ -56,7 +50,7 @@ public class UIReminderSystem : MonoBehaviour
 
         GameEventsManager.instance.questEvents.onStartQuest -= OnQuestStateChanged;
         GameEventsManager.instance.questEvents.onAdvanceQuest -= OnQuestStateChanged;
-        GameEventsManager.instance.questEvents.onFinishQuest -= OnQuestStateChanged;
+        GameEventsManager.instance.questEvents.onFinishQuest -= OnQuestFinished;
         GameEventsManager.instance.dialogueEvents.onDialogueStarted -= OnDialogueStarted;
         GameEventsManager.instance.dialogueEvents.onDialogueFinished -= OnDialogueFinished;
     }
@@ -84,7 +78,6 @@ public class UIReminderSystem : MonoBehaviour
         if (questLogReminderText != null)
         {
             StartCoroutine(BlinkQuestLogReminderOnce());
-            questLogReminderCoroutine = StartCoroutine(RepeatQuestLogReminder());
         }
     }
 
@@ -96,22 +89,6 @@ public class UIReminderSystem : MonoBehaviour
     private IEnumerator BlinkQuestLogReminderOnce()
     {
         yield return BlinkText(questLogReminderText, numberOfBlinks);
-    }
-
-    private IEnumerator RepeatQuestLogReminder()
-    {
-        yield return new WaitForSeconds(initialQuestLogDelay);
-
-        while (true)
-        {
-            float randomInterval = Random.Range(questLogRepeatMinInterval, questLogRepeatMaxInterval);
-            yield return new WaitForSeconds(randomInterval);
-
-            if (ShouldShowQuestLogReminder())
-            {
-                yield return BlinkText(questLogReminderText, numberOfBlinks);
-            }
-        }
     }
 
     private IEnumerator BlinkText(TextMeshProUGUI textComponent, int blinkCount)
@@ -135,33 +112,6 @@ public class UIReminderSystem : MonoBehaviour
         isQuestLogReminderActive = false;
     }
 
-    private bool ShouldShowQuestLogReminder()
-    {
-        if (GameEventsManager.instance == null)
-            return false;
-
-        InputEventContext currentContext = GameEventsManager.instance.inputEvents.inputEventContext;
-
-        bool isInDialogue = currentContext == InputEventContext.DIALOGUE;
-        bool isInQuestLog = currentContext == InputEventContext.QUEST_LOG;
-        bool isInTutorial = currentContext == InputEventContext.TUTORIAL;
-        bool hasActiveQuest = HasActiveQuest();
-
-        bool canShow = !isInDialogue && !isInQuestLog && !isInTutorial && !hasActiveQuest;
-
-        Debug.Log($"UIReminderSystem: ShouldShowQuestLogReminder = {canShow} (dialogue: {isInDialogue}, questLog: {isInQuestLog}, tutorial: {isInTutorial}, activeQuest: {hasActiveQuest})");
-
-        return canShow;
-    }
-
-    private bool HasActiveQuest()
-    {
-        if (QuestManager.instance == null)
-            return false;
-
-        return QuestManager.instance.HasActiveQuest();
-    }
-
     private void OnQuestStateChanged(string questId)
     {
     }
@@ -172,5 +122,15 @@ public class UIReminderSystem : MonoBehaviour
 
     private void OnDialogueFinished()
     {
+    }
+
+    private void OnQuestFinished(string questId)
+    {
+        Debug.Log($"<color=yellow>UIReminderSystem: Quest finished - {questId}. Blinking Quest Log reminder!</color>");
+        
+        if (questLogReminderText != null && !isQuestLogReminderActive)
+        {
+            StartCoroutine(BlinkText(questLogReminderText, numberOfBlinks));
+        }
     }
 }
