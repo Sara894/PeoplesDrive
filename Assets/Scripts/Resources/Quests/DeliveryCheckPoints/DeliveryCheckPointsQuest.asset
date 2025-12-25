@@ -28,6 +28,6 @@ MonoBehaviour:
   - VisitSecondCheckPointQuestStep 1
   - VisitThirdCheckPointQuestStep 2
   - QuestPointFCheck
-  timeLimitInSeconds: 16
+  timeLimitInSeconds: 300
   moneyReward: 50
   experienceCommunityReward: 25
