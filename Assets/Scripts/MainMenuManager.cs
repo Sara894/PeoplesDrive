@@ -14,6 +14,7 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] Button noExitGame;
     [SerializeField] Button creditsButton;
     [SerializeField] Button exitCreditsButton;
+    [SerializeField] Button resetProgressButton;
 
     [Header("UI Panels")]
     [SerializeField] GameObject mainMenuUI;
@@ -23,8 +24,8 @@ public class MainMenuManager : MonoBehaviour
 
     [Header("Input Actions for UI")]
     [SerializeField] InputActionReference cancelAction;
-    [SerializeField] InputActionReference navigateAction; // Vector2, e.g. from UI/Navigation
-    [SerializeField] InputActionReference submitAction;   // Button, e.g. from UI/Submit
+    [SerializeField] InputActionReference navigateAction;
+    [SerializeField] InputActionReference submitAction;
 
     private List<Button> mainMenuButtons;
     private List<Button> exitGameButtons;
@@ -32,13 +33,12 @@ public class MainMenuManager : MonoBehaviour
     private float navigationCooldown = 0.15f;
     private float lastNavigationTime = 0f;
 
-    // --- Input lockout to prevent double submit ---
     private float inputLockUntil = 0f;
     private const float inputLockDuration = 0.2f;
 
     private void Awake()
     {
-        mainMenuButtons = new List<Button> { startGameButton, creditsButton, exitGameButton };
+        mainMenuButtons = new List<Button> { startGameButton, resetProgressButton, creditsButton, exitGameButton };
         exitGameButtons = new List<Button> { yesExitGame, noExitGame };
     }
 
@@ -56,6 +56,9 @@ public class MainMenuManager : MonoBehaviour
         noExitGame.onClick.AddListener(OpenMainMenu);
         creditsButton.onClick.AddListener(OpenCreditsCanvas);
         exitCreditsButton.onClick.AddListener(CloseCreditsCanvas);
+
+        if (resetProgressButton != null)
+            resetProgressButton.onClick.AddListener(ResetProgress);
     }
 
     private void OnDisable()
@@ -65,6 +68,9 @@ public class MainMenuManager : MonoBehaviour
 
         navigateAction.action.Disable();
         submitAction.action.Disable();
+
+        if (resetProgressButton != null)
+            resetProgressButton.onClick.RemoveListener(ResetProgress);
     }
 
     private void Update()
@@ -111,13 +117,11 @@ public class MainMenuManager : MonoBehaviour
             }
         }
 
-        // --- Only allow submit if not locked ---
         if (Time.unscaledTime > inputLockUntil && submitAction.action.WasPressedThisFrame())
         {
             buttons[selectedButtonIndex].onClick.Invoke();
         }
 
-        // Ensure a button is always selected
         if (EventSystem.current.currentSelectedGameObject == null)
         {
             buttons[selectedButtonIndex].Select();
@@ -211,5 +215,10 @@ public class MainMenuManager : MonoBehaviour
 
         Debug.Log("Thank you for playing!");
         Application.Quit();
+    }
+
+    public void ResetProgress()
+    {
+        SaveManager.ResetAllProgress();
     }
 }
