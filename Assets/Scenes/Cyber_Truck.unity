@@ -88586,8 +88586,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8602235185999534970}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.3492263, z: 0, w: 0.9370385}
-  m_LocalPosition: {x: 463.4, y: -13, z: -353.2}
+  m_LocalRotation: {x: 0, y: 0.24699897, z: 0, w: 0.96901584}
+  m_LocalPosition: {x: 291, y: -13, z: -324.9}
   m_LocalScale: {x: 9.5, y: 7.4, z: 6.65}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -88595,7 +88595,7 @@ Transform:
   - {fileID: 4887005388533357738}
   - {fileID: 88286002}
   m_Father: {fileID: 2249884866111493843}
-  m_LocalEulerAnglesHint: {x: 0, y: -40.88, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 28.6, z: 0}
 --- !u!222 &258191744352390301
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -94138,7 +94138,7 @@ Transform:
   m_GameObject: {fileID: 2772711064344104538}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 344, y: -14.73, z: -345.2}
+  m_LocalPosition: {x: 401.11, y: -15.71, z: -312.94}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -96944,6 +96944,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1943733536544894718}
   - component: {fileID: 53094645721021566}
+  - component: {fileID: 1943733536544894719}
   m_Layer: 5
   m_Name: Hud
   m_TagString: Untagged
@@ -98998,6 +98999,26 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1943733536544894719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1688529477084751242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a0faf6cdf9350246b606b9f5927494b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tutorialReminderText: {fileID: 723966495}
+  questLogReminderText: {fileID: 1915020416}
+  blinkOnDuration: 0.5
+  blinkOffDuration: 0.5
+  numberOfBlinks: 4
+  questLogRepeatMinInterval: 15
+  questLogRepeatMaxInterval: 20
+  initialQuestLogDelay: 5
 --- !u!1 &1946721072433999205
 GameObject:
   m_ObjectHideFlags: 0
