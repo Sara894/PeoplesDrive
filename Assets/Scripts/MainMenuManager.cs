@@ -2,7 +2,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
-using System.Collections;
+using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -20,17 +21,34 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject creditsCanvas;
     [SerializeField] GameObject thankYouImage;
 
-    [Header("Safety Screen")]
-    [SerializeField] GameObject safetyCanvas;
-    [SerializeField] float safetyScreenDuration = 3f;
-
     [Header("Input Actions for UI")]
-    public InputActionReference cancelAction;
+    [SerializeField] InputActionReference cancelAction;
+    [SerializeField] InputActionReference navigateAction; // Vector2, e.g. from UI/Navigation
+    [SerializeField] InputActionReference submitAction;   // Button, e.g. from UI/Submit
+
+    private List<Button> mainMenuButtons;
+    private List<Button> exitGameButtons;
+    private int selectedButtonIndex = 0;
+    private float navigationCooldown = 0.15f;
+    private float lastNavigationTime = 0f;
+
+    // --- Input lockout to prevent double submit ---
+    private float inputLockUntil = 0f;
+    private const float inputLockDuration = 0.2f;
+
+    private void Awake()
+    {
+        mainMenuButtons = new List<Button> { startGameButton, creditsButton, exitGameButton };
+        exitGameButtons = new List<Button> { yesExitGame, noExitGame };
+    }
 
     private void OnEnable()
     {
         cancelAction.action.Enable();
         cancelAction.action.performed += OnCancel;
+
+        navigateAction.action.Enable();
+        submitAction.action.Enable();
 
         startGameButton.onClick.AddListener(LoadSinglePlayer);
         exitGameButton.onClick.AddListener(OpenExitGameCanvas);
@@ -44,11 +62,83 @@ public class MainMenuManager : MonoBehaviour
     {
         cancelAction.action.performed -= OnCancel;
         cancelAction.action.Disable();
+
+        navigateAction.action.Disable();
+        submitAction.action.Disable();
+    }
+
+    private void Update()
+    {
+        if (mainMenuUI.activeSelf)
+        {
+            HandleMenuNavigation(mainMenuButtons);
+        }
+        else if (exitGameUI.activeSelf)
+        {
+            HandleMenuNavigation(exitGameButtons);
+        }
+        else if (creditsCanvas != null && creditsCanvas.activeSelf)
+        {
+            HandleCreditsSubmit();
+        }
+    }
+
+    private void HandleMenuNavigation(List<Button> buttons)
+    {
+        if (buttons == null || buttons.Count == 0)
+            return;
+
+        Vector2 nav = navigateAction.action.ReadValue<Vector2>();
+        bool moved = false;
+
+        if (Time.unscaledTime - lastNavigationTime > navigationCooldown)
+        {
+            if (nav.y > 0.5f)
+            {
+                selectedButtonIndex = (selectedButtonIndex - 1 + buttons.Count) % buttons.Count;
+                moved = true;
+            }
+            else if (nav.y < -0.5f)
+            {
+                selectedButtonIndex = (selectedButtonIndex + 1) % buttons.Count;
+                moved = true;
+            }
+
+            if (moved)
+            {
+                lastNavigationTime = Time.unscaledTime;
+                buttons[selectedButtonIndex].Select();
+            }
+        }
+
+        // --- Only allow submit if not locked ---
+        if (Time.unscaledTime > inputLockUntil && submitAction.action.WasPressedThisFrame())
+        {
+            buttons[selectedButtonIndex].onClick.Invoke();
+        }
+
+        // Ensure a button is always selected
+        if (EventSystem.current.currentSelectedGameObject == null)
+        {
+            buttons[selectedButtonIndex].Select();
+        }
+    }
+
+    private void HandleCreditsSubmit()
+    {
+        if (Time.unscaledTime > inputLockUntil && submitAction.action.WasPressedThisFrame())
+        {
+            exitCreditsButton.onClick.Invoke();
+        }
+
+        if (EventSystem.current.currentSelectedGameObject != exitCreditsButton.gameObject)
+        {
+            exitCreditsButton.Select();
+        }
     }
 
     private void OnCancel(InputAction.CallbackContext ctx)
     {
-
         if (exitGameUI.activeSelf)
         {
             OpenMainMenu();
@@ -70,26 +160,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void LoadSinglePlayer()
     {
-        StartCoroutine(LoadSinglePlayerCoroutine());
-    }
-
-    IEnumerator LoadSinglePlayerCoroutine()
-    {
-        mainMenuUI.SetActive(false);
-        exitGameUI.SetActive(false);
-        creditsCanvas?.SetActive(false);
-
-        if (safetyCanvas != null)
-        {
-            safetyCanvas.SetActive(true);
-            yield return new WaitForSeconds(safetyScreenDuration);
-            safetyCanvas.SetActive(false);
-        }
-
-        AsyncOperation operation = SceneManager.LoadSceneAsync("Cyber_Truck");
-        operation.allowSceneActivation = true;
-
-        yield return new WaitUntil(() => operation.isDone);
+        SceneManager.LoadScene("Cyber_Truck");
     }
 
     public void OpenExitGameCanvas()
@@ -97,6 +168,10 @@ public class MainMenuManager : MonoBehaviour
         mainMenuUI.SetActive(false);
         exitGameUI.SetActive(true);
         creditsCanvas?.SetActive(false);
+        selectedButtonIndex = 0;
+        if (exitGameButtons.Count > 0 && exitGameButtons[0] != null)
+            exitGameButtons[0].Select();
+        inputLockUntil = Time.unscaledTime + inputLockDuration;
     }
 
     public void OpenMainMenu()
@@ -105,27 +180,36 @@ public class MainMenuManager : MonoBehaviour
         mainMenuUI.SetActive(true);
         creditsCanvas?.SetActive(false);
         thankYouImage?.SetActive(false);
+        selectedButtonIndex = 0;
+        mainMenuButtons[selectedButtonIndex].Select();
+        inputLockUntil = Time.unscaledTime + inputLockDuration;
     }
 
     public void OpenCreditsCanvas()
     {
         mainMenuUI.SetActive(false);
         creditsCanvas?.SetActive(true);
+        selectedButtonIndex = 0;
+        if (exitCreditsButton != null)
+            exitCreditsButton.Select();
+        inputLockUntil = Time.unscaledTime + inputLockDuration;
     }
 
     public void CloseCreditsCanvas()
     {
         creditsCanvas?.SetActive(false);
         mainMenuUI.SetActive(true);
+        selectedButtonIndex = 0;
+        mainMenuButtons[selectedButtonIndex].Select();
+        inputLockUntil = Time.unscaledTime + inputLockDuration;
     }
 
     public void ShowThankYouAndExit()
     {
         exitGameUI.SetActive(false);
         thankYouImage?.SetActive(true);
-        Debug.Log("Thank you for playing!");
 
+        Debug.Log("Thank you for playing!");
         Application.Quit();
-        Debug.Log("Game Closed");
     }
 }

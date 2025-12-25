@@ -673,6 +673,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainMenuButton: {fileID: 356552441}
+  submitAction: {fileID: 8968430841537221897, guid: f008bd9337e5eb44bb8426b3fd99c406, type: 3}
 --- !u!4 &1308635527
 Transform:
   m_ObjectHideFlags: 0

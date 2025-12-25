@@ -1,13 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class MainMenuButton : MonoBehaviour
 {
     [SerializeField] Button mainMenuButton;
-    // Start is called before the first frame update
+    [SerializeField] InputActionReference submitAction;
+
+    void OnEnable()
+    {
+        if (submitAction != null)
+            submitAction.action.performed += OnSubmit;
+        if (submitAction != null)
+            submitAction.action.Enable();
+    }
+
+    void OnDisable()
+    {
+        if (submitAction != null)
+            submitAction.action.performed -= OnSubmit;
+        if (submitAction != null)
+            submitAction.action.Disable();
+    }
+
     void Start()
     {
         mainMenuButton.onClick.AddListener(() => {
@@ -15,9 +31,11 @@ public class MainMenuButton : MonoBehaviour
         });
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnSubmit(InputAction.CallbackContext context)
     {
-        
+        if (mainMenuButton != null && mainMenuButton.interactable)
+        {
+            mainMenuButton.onClick.Invoke();
+        }
     }
 }

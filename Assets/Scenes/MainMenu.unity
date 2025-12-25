@@ -2831,9 +2831,9 @@ MonoBehaviour:
   exitGameUI: {fileID: 1536015027}
   creditsCanvas: {fileID: 163225503}
   thankYouImage: {fileID: 2052566183}
-  safetyCanvas: {fileID: 2103770315}
-  safetyScreenDuration: 3
   cancelAction: {fileID: 7800410187619387955, guid: f008bd9337e5eb44bb8426b3fd99c406, type: 3}
+  navigateAction: {fileID: -3637397699941233079, guid: f008bd9337e5eb44bb8426b3fd99c406, type: 3}
+  submitAction: {fileID: 8968430841537221897, guid: f008bd9337e5eb44bb8426b3fd99c406, type: 3}
 --- !u!4 &2118528375
 Transform:
   m_ObjectHideFlags: 0
