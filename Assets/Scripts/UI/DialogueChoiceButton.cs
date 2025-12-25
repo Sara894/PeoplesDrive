@@ -46,13 +46,16 @@ public class DialogueChoiceButton : MonoBehaviour, ISelectHandler
 
     public void OnSelect(BaseEventData eventData)
     {
+        // Navigation only - update which choice is highlighted
         GameEventsManager.instance.dialogueEvents.UpdateChoiceIndex(choiceIndex);
     }
 
     private void OnButtonClicked()
     {
         Debug.Log($"<color=orange>DialogueChoiceButton: Button clicked! Choice index: {choiceIndex}</color>");
+        // Update the choice index
         GameEventsManager.instance.dialogueEvents.UpdateChoiceIndex(choiceIndex);
+        // Confirm the choice (same as pressing E/Enter)
         GameEventsManager.instance.inputEvents.SubmitPressed();
     }
 }

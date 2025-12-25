@@ -15,6 +15,8 @@ public class DialogueManager : MonoBehaviour
 
     private Story story;
     private int currentChoiceIndex = -1;
+    private bool choicesBeingDisplayed = false;
+    private bool canConfirmChoice = false;
 
     private bool dialoguePlaying = false;
     private bool pendingAutoClose = false;
@@ -100,16 +102,42 @@ public class DialogueManager : MonoBehaviour
     {
         Debug.Log($"<color=cyan>DialogueManager: UpdateChoiceIndex called with index: {choiceIndex}</color>");
         this.currentChoiceIndex = choiceIndex;
+        // Only update the index - don't auto-continue
+        // Continue happens when player presses E/Enter or clicks
     }
 
     private void SubmitPressed(InputEventContext inputEventContext) 
     {
-        Debug.Log($"<color=cyan>DialogueManager: SubmitPressed - context: {inputEventContext}, currentChoiceIndex: {currentChoiceIndex}</color>");
+        Debug.Log($"<color=cyan>DialogueManager: SubmitPressed - context: {inputEventContext}, currentChoiceIndex: {currentChoiceIndex}, choicesBeingDisplayed: {choicesBeingDisplayed}, canConfirmChoice: {canConfirmChoice}</color>");
         
         // if the context isn't dialogue, we never want to register input here
         if (!inputEventContext.Equals(InputEventContext.DIALOGUE)) 
         {
             Debug.Log("DialogueManager: Context not DIALOGUE, ignoring");
+            return;
+        }
+
+        // If choices are being displayed, confirm the current choice
+        if (choicesBeingDisplayed)
+        {
+            // Block input until at least one frame after choices appeared
+            if (!canConfirmChoice)
+            {
+                Debug.Log("<color=yellow>DialogueManager: Choices just appeared, ignoring E press. Wait a moment before confirming.</color>");
+                return;
+            }
+
+            if (currentChoiceIndex != -1)
+            {
+                Debug.Log($"<color=green>DialogueManager: Confirming choice {currentChoiceIndex} with E/Enter</color>");
+                choicesBeingDisplayed = false;
+                canConfirmChoice = false;
+                ContinueOrExitStory();
+            }
+            else
+            {
+                Debug.LogWarning("DialogueManager: No choice selected! Navigate with arrow keys first.");
+            }
             return;
         }
 
@@ -196,6 +224,21 @@ public class DialogueManager : MonoBehaviour
             {
                 GameEventsManager.instance.dialogueEvents.DisplayDialogue(dialogueLine, story.currentChoices);
                 
+                // Check if choices are being displayed
+                if (story.currentChoices.Count > 0)
+                {
+                    Debug.Log($"<color=magenta>DialogueManager: Displaying {story.currentChoices.Count} choices - blocking auto-continue</color>");
+                    choicesBeingDisplayed = true;
+                    canConfirmChoice = false;
+                    // Enable choice confirmation after a short delay to prevent accidental instant-confirm
+                    StartCoroutine(EnableChoiceConfirmationAfterDelay());
+                }
+                else
+                {
+                    choicesBeingDisplayed = false;
+                    canConfirmChoice = false;
+                }
+                
                 // Auto-close if this is the last line with no choices
                 if (autoCloseOnLastLine && !story.canContinue && story.currentChoices.Count == 0)
                 {
@@ -232,6 +275,11 @@ public class DialogueManager : MonoBehaviour
         // Reset pending auto-close flag
         pendingAutoClose = false;
 
+        // Reset choice flags
+        choicesBeingDisplayed = false;
+        canConfirmChoice = false;
+        currentChoiceIndex = -1;
+
         dialoguePlaying = false;
 
         // inform other parts of our system that we've finished dialogue
@@ -255,6 +303,14 @@ public class DialogueManager : MonoBehaviour
         yield return new WaitForSeconds(autoCloseDelay);
         Debug.Log("DialogueManager: Auto-closing dialogue");
         ExitDialogue();
+    }
+
+    private System.Collections.IEnumerator EnableChoiceConfirmationAfterDelay()
+    {
+        // Wait for next frame to ensure the E press that opened dialogue is consumed
+        yield return null;
+        canConfirmChoice = true;
+        Debug.Log("<color=green>DialogueManager: Choice confirmation now enabled</color>");
     }
 
     private bool IsLineBlank(string dialogueLine)

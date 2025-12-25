@@ -59,6 +59,19 @@ Thank you for the delivery.
 
 = canFinish
 Thank you for delivering the package! You've done us a great service.
+Before you go, can I ask for your opinion? The community is voting on what to improve next in the neighborhood.
+* [Improve the roads]
+    That's practical thinking. Better roads mean safer deliveries for everyone!
+    -> questComplete
+* [Add more street lights]
+    Safety first, I like it. More lights will help drivers navigate at night.
+    -> questComplete
+* [Build a community center]
+    Bringing people together, I respect that. We could use a place to gather.
+    -> questComplete
+
+= questComplete
+Thanks for your input. Every voice matters in our community!
 ~ FinishQuest(DeliveryQuest)
 -> END
 
@@ -121,6 +134,19 @@ What do you want?
 
 = canFinish
 Perfect delivery! You hit all the checkpoints in time!
+Hey, quick question - we're planning a community event. What would you like to see?
+* [Street racing tournament]
+    Now that's exciting! Fast cars, friendly competition. I'm in!
+    -> questComplete
+* [Food truck festival]
+    Delicious idea! Nothing brings people together like good food.
+    -> questComplete
+* [Outdoor movie night]
+    Classic choice! A great way to relax after a long day of deliveries.
+    -> questComplete
+
+= questComplete
+Awesome! We'll consider that for the next event. Thanks for your time!
 ~ FinishQuest(DeliveryCheckPointsQuest)
 -> END
 
@@ -181,6 +207,19 @@ What do you need?
 
 = canFinish
 Perfect! Thanks for bringing this over!
+Oh, one more thing - the neighborhood council is discussing traffic improvements. What's your take?
+* [Add speed bumps for safety]
+    Good thinking. Slowing down cars will protect pedestrians and kids.
+    -> questComplete
+* [Widen the main road]
+    More space means less congestion. Smart for delivery drivers like you!
+    -> questComplete
+* [Install traffic lights at intersections]
+    Organization is key. Traffic lights will keep things flowing smoothly.
+    -> questComplete
+
+= questComplete
+I appreciate your perspective. Your experience on the road really helps!
 ~ FinishQuest(SimpleDeliveryQuest)
 -> END
 
@@ -243,6 +282,19 @@ What do you want?
 
 = canFinish
 Perfect delivery! You hit all the checkpoints in time!
+Real quick - we're planning neighborhood improvements. What should we prioritize?
+* [Plant more trees and green spaces]
+    Environmental choice! Trees make the streets more pleasant and cleaner air for everyone.
+    -> questComplete
+* [Repair damaged sidewalks]
+    Practical and necessary. Safe walkways benefit the whole community.
+    -> questComplete
+* [Add bike lanes]
+    Forward thinking! Alternative transportation options are always good.
+    -> questComplete
+
+= questComplete
+Thanks for weighing in! The community appreciates drivers like you who care.
 ~ FinishQuest(DeliveryQuestCheckPoint2)
 -> END
 

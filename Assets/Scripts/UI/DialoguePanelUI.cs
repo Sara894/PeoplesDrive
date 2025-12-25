@@ -117,10 +117,10 @@ public class DialoguePanelUI : MonoBehaviour
                 choiceButton.SetChoiceText(dialogueChoice.text);
                 choiceButton.SetChoiceIndex(inkChoiceIndex);
 
+                // Auto-select first choice for keyboard navigation
                 if (inkChoiceIndex == 0)
                 {
                     choiceButton.SelectButton();
-                    GameEventsManager.instance.dialogueEvents.UpdateChoiceIndex(inkChoiceIndex);
                 }
 
                 choiceButtonIndex--;

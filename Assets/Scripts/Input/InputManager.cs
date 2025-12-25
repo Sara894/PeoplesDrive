@@ -29,7 +29,7 @@ public class InputManager : MonoBehaviour
 
     private void HandleSubmitInput()
     {
-        if (Input.GetKeyDown(submitKey))
+        if (Input.GetKeyDown(submitKey) || Input.GetKeyDown(KeyCode.Return))
         {
             GameEventsManager.instance.inputEvents.SubmitPressed();
         }
