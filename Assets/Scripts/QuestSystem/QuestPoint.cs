@@ -29,10 +29,14 @@ public class QuestPoint : MonoBehaviour
         questId = questInfoForPoint.id;
         questIcon = GetComponentInChildren<QuestIcon>(true);
         
-        GameObject promptObj = GameObject.Find("InteractionPrompt");
+        GameObject promptObj = GameObject.Find("Press E");
         if (promptObj != null)
         {
             interactionPromptText = promptObj.GetComponent<TextMeshProUGUI>();
+        }
+        else
+        {
+            Debug.LogWarning($"QuestPoint {gameObject.name}: Could not find 'Press E' GameObject in scene!");
         }
     }
 

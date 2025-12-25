@@ -2250,7 +2250,7 @@ Transform:
   m_GameObject: {fileID: 80033792}
   serializedVersion: 2
   m_LocalRotation: {x: 0.14954536, y: 0, z: 0, w: 0.98875487}
-  m_LocalPosition: {x: 214.09999, y: 35.049995, z: -376.4}
+  m_LocalPosition: {x: 178.79999, y: 50.949993, z: -376.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -36501,7 +36501,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &944822429
 Transform:
   m_ObjectHideFlags: 0
@@ -72582,7 +72582,7 @@ Transform:
   m_GameObject: {fileID: 1910994605}
   serializedVersion: 2
   m_LocalRotation: {x: 0.14954536, y: 0, z: 0, w: 0.98875487}
-  m_LocalPosition: {x: 214.09999, y: 35.049995, z: -376.4}
+  m_LocalPosition: {x: 178.79999, y: 50.949993, z: -376.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -74656,7 +74656,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1965418507
 Transform:
   m_ObjectHideFlags: 0
@@ -126094,6 +126094,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   successText: {fileID: 1349502010091698369}
   displayDuration: 3
+  outroSceneName: OutroScene
   onAllQuestsCompleted:
     m_PersistentCalls:
       m_Calls: []
@@ -141890,7 +141891,7 @@ Transform:
   m_GameObject: {fileID: 7618499313018430449}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -35.3, y: 15.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
