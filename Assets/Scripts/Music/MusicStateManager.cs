@@ -79,6 +79,7 @@ public class MusicStateManager : MonoBehaviour
             GameEventsManager.instance.questEvents.onStartQuest += OnQuestStarted;
             GameEventsManager.instance.questEvents.onAdvanceQuest += OnQuestAdvanced;
             GameEventsManager.instance.questEvents.onFinishQuest += OnQuestFinished;
+            GameEventsManager.instance.questEvents.onQuestFailed += OnQuestFailed;
 
             if (debugMode)
             {
@@ -94,6 +95,7 @@ public class MusicStateManager : MonoBehaviour
             GameEventsManager.instance.questEvents.onStartQuest -= OnQuestStarted;
             GameEventsManager.instance.questEvents.onAdvanceQuest -= OnQuestAdvanced;
             GameEventsManager.instance.questEvents.onFinishQuest -= OnQuestFinished;
+            GameEventsManager.instance.questEvents.onQuestFailed -= OnQuestFailed;
         }
     }
 
@@ -124,6 +126,17 @@ public class MusicStateManager : MonoBehaviour
         if (debugMode)
         {
             Debug.Log($"MusicStateManager: Quest '{questId}' finished - switching to Free Roam music");
+        }
+    }
+
+    private void OnQuestFailed(string questId)
+    {
+        hasActiveQuest = false;
+        SetMusicState(MusicState.FreeRoam);
+
+        if (debugMode)
+        {
+            Debug.Log($"MusicStateManager: Quest '{questId}' failed - switching to Free Roam music");
         }
     }
 
