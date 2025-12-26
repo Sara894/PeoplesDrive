@@ -38,7 +38,7 @@ public class MainMenuManager : MonoBehaviour
 
     private void Awake()
     {
-        mainMenuButtons = new List<Button> { startGameButton, resetProgressButton, creditsButton, exitGameButton };
+        mainMenuButtons = new List<Button> { startGameButton, creditsButton, exitGameButton };
         exitGameButtons = new List<Button> { yesExitGame, noExitGame };
     }
 
@@ -56,9 +56,6 @@ public class MainMenuManager : MonoBehaviour
         noExitGame.onClick.AddListener(OpenMainMenu);
         creditsButton.onClick.AddListener(OpenCreditsCanvas);
         exitCreditsButton.onClick.AddListener(CloseCreditsCanvas);
-
-        if (resetProgressButton != null)
-            resetProgressButton.onClick.AddListener(ResetProgress);
     }
 
     private void OnDisable()
@@ -69,8 +66,6 @@ public class MainMenuManager : MonoBehaviour
         navigateAction.action.Disable();
         submitAction.action.Disable();
 
-        if (resetProgressButton != null)
-            resetProgressButton.onClick.RemoveListener(ResetProgress);
     }
 
     private void Update()
@@ -215,10 +210,5 @@ public class MainMenuManager : MonoBehaviour
 
         Debug.Log("Thank you for playing!");
         Application.Quit();
-    }
-
-    public void ResetProgress()
-    {
-        SaveManager.ResetAllProgress();
     }
 }
