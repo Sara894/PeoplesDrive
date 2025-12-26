@@ -75,12 +75,15 @@ namespace Ezereal
 
             float motor = 0f;
 
-            if (motorInput > 0.1f && speed < maxSpeed)
+            if (Mathf.Abs(motorInput) > 0.1f && speed < maxSpeed)
             {
                 motor = maxMotorTorque * motorInput;
 
-                if (speed < 10f)
+                if (motorInput > 0f && speed < 10f)
                     motor *= 2.5f;
+
+                if (motorInput < 0f && speed < 5f)
+                    motor *= 1.5f;
             }
 
             bool noThrottle = Mathf.Abs(motorInput) < 0.05f;
@@ -96,13 +99,10 @@ namespace Ezereal
 
             float appliedBrake = 0f;
             if (brakeInput)
-            {
                 appliedBrake = brakeTorque;
-            }
             else if (noThrottle && speed > 0.5f)
-            {
                 appliedBrake = brakeTorque * 0.4f;
-            }
+
             frontLeftWheelCollider.brakeTorque = appliedBrake;
             frontRightWheelCollider.brakeTorque = appliedBrake;
             rearLeftWheelCollider.brakeTorque = appliedBrake;
@@ -113,6 +113,7 @@ namespace Ezereal
             UpdateWheelPose(rearLeftWheelCollider, rearLeftWheelMesh);
             UpdateWheelPose(rearRightWheelCollider, rearRightWheelMesh);
         }
+
 
         private void UpdateWheelPose(WheelCollider collider, Transform mesh)
         {
