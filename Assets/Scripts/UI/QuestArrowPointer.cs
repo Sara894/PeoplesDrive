@@ -195,7 +195,12 @@ public class QuestArrowPointer : MonoBehaviour
         {
             if (currentQuest == null)
             {
-                Debug.Log($"QuestArrowPointer: Quest '{quest.info.displayName}' started directly (not via Quest Log). Activating arrow at current step.");
+                Debug.Log($"QuestArrowPointer: Quest '{quest.info.displayName}' started. Activating arrow.");
+                ActivateArrowForQuest(quest);
+            }
+            else if (currentQuest.info.id != quest.info.id)
+            {
+                Debug.Log($"QuestArrowPointer: New quest '{quest.info.displayName}' started while '{currentQuest.info.displayName}' was active. Switching arrow to new quest.");
                 ActivateArrowForQuest(quest);
             }
         }

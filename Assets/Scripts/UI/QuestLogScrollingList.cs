@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class QuestLogScrollingList : MonoBehaviour
 {
@@ -71,7 +72,42 @@ public class QuestLogScrollingList : MonoBehaviour
         });
         // add to map to keep track of the new button
         idToButtonMap[quest.info.id] = questLogButton;
+        
+        UpdateButtonNavigation();
+        
         return questLogButton;
+    }
+    
+    private void UpdateButtonNavigation()
+    {
+        List<Button> buttons = new List<Button>();
+        
+        foreach (Transform child in contentParent.transform)
+        {
+            Button btn = child.GetComponent<Button>();
+            if (btn != null)
+            {
+                buttons.Add(btn);
+            }
+        }
+        
+        for (int i = 0; i < buttons.Count; i++)
+        {
+            Navigation nav = new Navigation();
+            nav.mode = Navigation.Mode.Explicit;
+            
+            if (i > 0)
+            {
+                nav.selectOnUp = buttons[i - 1];
+            }
+            
+            if (i < buttons.Count - 1)
+            {
+                nav.selectOnDown = buttons[i + 1];
+            }
+            
+            buttons[i].navigation = nav;
+        }
     }
 
     private void UpdateScrolling(RectTransform buttonRectTransform)
