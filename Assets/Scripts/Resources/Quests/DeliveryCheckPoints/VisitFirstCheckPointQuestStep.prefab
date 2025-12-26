@@ -171,4 +171,4 @@ MonoBehaviour:
   checkpointNumberString: first
   requiresDeliveryItem: 1
   requiredItemName: DeliveryBox
-  timeBonusSeconds: 2
+  timeBonusSeconds: 10

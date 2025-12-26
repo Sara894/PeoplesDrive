@@ -23,6 +23,6 @@ MonoBehaviour:
   arrowWaypointNames:
   - QuestPointS
   - QuestPointF
-  timeLimitInSeconds: 300
+  timeLimitInSeconds: 90
   moneyReward: 25
   experienceCommunityReward: 25
