@@ -22374,11 +22374,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 05bff63d548a7e64999f73c8391ebcd7, type: 2}
     - target: {fileID: 3611880080676546563, guid: 1f4ddde5851585446aa8e505f62ce7c5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -557
+      value: -556.9
       objectReference: {fileID: 0}
     - target: {fileID: 3611880080676546563, guid: 1f4ddde5851585446aa8e505f62ce7c5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 37
+      value: 32.3
       objectReference: {fileID: 0}
     - target: {fileID: 3611880080676546563, guid: 1f4ddde5851585446aa8e505f62ce7c5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -35112,7 +35112,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5839826912013585530, guid: 2cc01d9329310624dba9919892b918e3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -172.7
+      value: -172.88
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -102045,7 +102045,7 @@ Transform:
   m_GameObject: {fileID: 5430539264270789853}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.94, y: 0.455, z: -1.445}
+  m_LocalPosition: {x: 0.9, y: 0.455, z: -1.445}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -145649,7 +145649,7 @@ Transform:
   m_GameObject: {fileID: 8501553641822141312}
   serializedVersion: 2
   m_LocalRotation: {x: -0.000000021855692, y: 0.00000004371139, z: 0.00000004371139, w: 1}
-  m_LocalPosition: {x: 0.94, y: 0.434, z: 1.84}
+  m_LocalPosition: {x: 0.9, y: 0.434, z: 1.84}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -152094,8 +152094,6 @@ MonoBehaviour:
   mainMenuButton: {fileID: 1380090309}
   pauseButton: {fileID: 913044741}
   pauseAction: {fileID: -396683745695792286, guid: f008bd9337e5eb44bb8426b3fd99c406, type: 3}
-  navigateAction: {fileID: -3637397699941233079, guid: f008bd9337e5eb44bb8426b3fd99c406, type: 3}
-  submitAction: {fileID: 8968430841537221897, guid: f008bd9337e5eb44bb8426b3fd99c406, type: 3}
 --- !u!1 &8245036273314065487
 GameObject:
   m_ObjectHideFlags: 0
