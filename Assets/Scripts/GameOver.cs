@@ -6,8 +6,8 @@ namespace Ezereal
     public class GameOver : MonoBehaviour
     {
         [Header("Game Over Settings")]
-        [SerializeField] private float upsideDownThreshold = 0.5f; // Dot product threshold
-        [SerializeField] private float timeUpsideDown = 1f;        // Seconds before game over
+        [SerializeField] private float upsideDownThreshold = 0.2f;
+        [SerializeField] private float timeUpsideDown = 0.3f;
 
         private float upsideDownTimer = 0f;
         private bool gameOverTriggered = false;

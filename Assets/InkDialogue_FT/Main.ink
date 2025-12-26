@@ -64,7 +64,7 @@ Now that the crisis is over, the neighborhood is discussing how to prevent situa
     Better equipment and space would let us treat more people.
     -> questComplete
 * [Faster emergency routes]
-    Clearer roads could save lives in emergencies..
+    Clearer roads could save lives in emergencies.
     -> questComplete
 * [Community health volunteers]
     Training locals to help in emergencies could make a big difference.
