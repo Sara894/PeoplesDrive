@@ -20,7 +20,7 @@ namespace Ezereal
         public Transform rearRightWheelMesh;
 
         [Header("Settings")]
-        public float maxMotorTorque = 800f;
+        public float maxMotorTorque = 2500f;
         public float maxSteerAngle = 5f;
         public float brakeTorque = 2000f;
         public float maxSpeed = 50f;
@@ -74,21 +74,17 @@ namespace Ezereal
             float speed = vehicleRB.velocity.magnitude;
 
             float motor = 0f;
-            if (Mathf.Abs(motorInput) > 0.01f && speed < maxSpeed)
+
+            if (motorInput > 0.1f && speed < maxSpeed)
             {
-                // High torque at low speed, low torque at high speed
-                //float accelFactor = Mathf.Lerp(1.5f, 0.1f, speed / maxSpeed);
-                float speed01 = speed / maxSpeed;
-                float accelFactor = Mathf.Lerp(2.5f, 0.8f, speed01);
+                motor = maxMotorTorque * motorInput;
 
-                motor = maxMotorTorque * motorInput * accelFactor;
-
-                if (speed < 5f && motorInput > 0.1f)
-                {
-                    motor *= 1.5f;
-                }
-
+                if (speed < 10f)
+                    motor *= 2.5f;
             }
+
+            bool noThrottle = Mathf.Abs(motorInput) < 0.05f;
+
             frontLeftWheelCollider.motorTorque = motor;
             frontRightWheelCollider.motorTorque = motor;
             rearLeftWheelCollider.motorTorque = motor;
@@ -103,14 +99,9 @@ namespace Ezereal
             {
                 appliedBrake = brakeTorque;
             }
-            //else if (Mathf.Approximately(motorInput, 0f))
-            //{
-            //    appliedBrake = brakeTorque;
-            //}
-
-            else
+            else if (noThrottle && speed > 0.5f)
             {
-                appliedBrake = 0f;
+                appliedBrake = brakeTorque * 0.4f;
             }
             frontLeftWheelCollider.brakeTorque = appliedBrake;
             frontRightWheelCollider.brakeTorque = appliedBrake;
