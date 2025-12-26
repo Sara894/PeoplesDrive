@@ -19,6 +19,12 @@ public class DeliveryCheckPoints : QuestStep
     private GameObject player;
     private ItemSpawnPoint itemSpawnPoint;
 
+    private void OnEnable()
+    {
+        checkpointReached = false;
+        Debug.Log($"DeliveryCheckPoints: {checkpointNumberString} checkpoint enabled and reset");
+    }
+
     private void Start()
     {
         SetupTriggerZone();
@@ -85,16 +91,24 @@ public class DeliveryCheckPoints : QuestStep
     
     private void ReachCheckpoint()
     {
+        Debug.Log($"DeliveryCheckPoints: ReachCheckpoint() START for {checkpointNumberString}");
         checkpointReached = true;
         
+        Debug.Log($"DeliveryCheckPoints: Calling AddTimeBonusToQuest()");
         AddTimeBonusToQuest();
+        
+        Debug.Log($"DeliveryCheckPoints: Calling PlayCheckpointSound()");
         PlayCheckpointSound();
         
+        Debug.Log($"DeliveryCheckPoints: Calling UpdateQuestStatus()");
         UpdateQuestStatus($"✓ {checkpointNumberString} checkpoint reached! +{timeBonusSeconds}s");
         
         Debug.Log($"DeliveryCheckPoints: {checkpointNumberString} checkpoint completed!");
         
+        Debug.Log($"DeliveryCheckPoints: Calling FinishQuestStep() for questId={questId}");
         FinishQuestStep();
+        
+        Debug.Log($"DeliveryCheckPoints: ReachCheckpoint() END");
     }
     
     private void PlayCheckpointSound()
@@ -121,7 +135,16 @@ public class DeliveryCheckPoints : QuestStep
     
     private void UpdateQuestStatus(string status)
     {
-        ChangeState("", status);
+        Debug.Log($"DeliveryCheckPoints: UpdateQuestStatus called with status='{status}'");
+        try
+        {
+            ChangeState("", status);
+            Debug.Log($"DeliveryCheckPoints: ChangeState completed successfully");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"DeliveryCheckPoints: ChangeState threw exception: {e.Message}\n{e.StackTrace}");
+        }
     }
 
     protected override void SetQuestStepState(string state)

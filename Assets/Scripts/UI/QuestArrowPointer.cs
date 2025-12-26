@@ -203,6 +203,12 @@ public class QuestArrowPointer : MonoBehaviour
                 Debug.Log($"QuestArrowPointer: New quest '{quest.info.displayName}' started while '{currentQuest.info.displayName}' was active. Switching arrow to new quest.");
                 ActivateArrowForQuest(quest);
             }
+            else if (currentQuest.info.id == quest.info.id)
+            {
+                Debug.Log($"QuestArrowPointer: Quest '{quest.info.displayName}' restarted. Resyncing arrow to step {quest.GetCurrentQuestStepIndex()}.");
+                currentStepIndex = quest.GetCurrentQuestStepIndex();
+                SetTargetForCurrentStep();
+            }
         }
         else if (currentQuest != null && quest.info.id == currentQuest.info.id)
         {

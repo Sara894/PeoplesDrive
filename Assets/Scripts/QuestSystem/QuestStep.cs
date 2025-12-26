@@ -12,6 +12,10 @@ public abstract class QuestStep : MonoBehaviour
     {
         this.questId = questId;
         this.stepIndex = stepIndex;
+        this.isFinished = false;
+        
+        Debug.Log($"QuestStep.InitializeQuestStep: {gameObject.name} initialized with questId={questId}, stepIndex={stepIndex}, isFinished reset to false");
+        
         if (questStepState != null && questStepState != "")
         {
             SetQuestStepState(questStepState);
@@ -20,6 +24,8 @@ public abstract class QuestStep : MonoBehaviour
 
     protected void FinishQuestStep()
     {
+        Debug.Log($"QuestStep.FinishQuestStep() called for {gameObject.name}, isFinished={isFinished}, questId={questId}, stepIndex={stepIndex}");
+        
         if (!isFinished)
         {
             Quest quest = QuestManager.instance.GetQuestById(questId);
@@ -30,7 +36,10 @@ public abstract class QuestStep : MonoBehaviour
             }
 
             isFinished = true;
+            
+            Debug.Log($"QuestStep: Calling AdvanceQuest for questId={questId}");
             GameEventsManager.instance.questEvents.AdvanceQuest(questId);
+            Debug.Log($"QuestStep: AdvanceQuest called successfully");
             
             if (this.gameObject.name.Contains("(Clone)"))
             {
@@ -42,6 +51,10 @@ public abstract class QuestStep : MonoBehaviour
                 this.gameObject.SetActive(false);
                 Debug.Log($"QuestStep: Disabled scene-placed quest step {this.gameObject.name}");
             }
+        }
+        else
+        {
+            Debug.LogWarning($"QuestStep.FinishQuestStep() called but step is already finished! {gameObject.name}");
         }
     }
 

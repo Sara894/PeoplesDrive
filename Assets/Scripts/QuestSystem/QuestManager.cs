@@ -137,9 +137,52 @@ public class QuestManager : MonoBehaviour
 
         Debug.Log($"StartQuest called for: {id}");
         Quest quest = GetQuestById(id);
+        
+        ReEnableQuestSteps(id);
+        
         Debug.Log($"Instantiating quest step for: {id}");
         quest.InstantiateCurrentQuestStep(this.transform);
         ChangeQuestState(quest.info.id, QuestState.IN_PROGRESS);
+    }
+    
+    private void ReEnableQuestSteps(string questId)
+    {
+        Quest quest = GetQuestById(questId);
+        if (quest == null || quest.info == null || quest.info.questStepPrefabs == null)
+        {
+            Debug.LogWarning($"ReEnableQuestSteps: Cannot re-enable steps for quest {questId} - quest or prefabs not found");
+            return;
+        }
+
+        QuestStep[] allQuestSteps = FindObjectsOfType<QuestStep>(true);
+        
+        for (int stepIndex = 0; stepIndex < quest.info.questStepPrefabs.Length; stepIndex++)
+        {
+            GameObject prefab = quest.info.questStepPrefabs[stepIndex];
+            if (prefab == null) continue;
+            
+            string prefabName = prefab.name;
+            string prefabNameWithoutVariant = prefabName.Replace(" Variant", "").Trim();
+            
+            foreach (QuestStep questStep in allQuestSteps)
+            {
+                if (questStep.gameObject.name.Contains("(Clone)")) continue;
+                
+                string stepName = questStep.gameObject.name;
+                bool isMatch = stepName == prefabName || 
+                               stepName == prefabNameWithoutVariant ||
+                               stepName.StartsWith(prefabName) || 
+                               stepName.StartsWith(prefabNameWithoutVariant);
+                
+                if (isMatch)
+                {
+                    questStep.gameObject.SetActive(true);
+                    questStep.InitializeQuestStep(questId, stepIndex, "");
+                    Debug.Log($"Re-enabled and initialized scene-placed quest step: {questStep.gameObject.name} at step index {stepIndex}");
+                    break;
+                }
+            }
+        }
     }
 
     private void AdvanceQuest(string id)
