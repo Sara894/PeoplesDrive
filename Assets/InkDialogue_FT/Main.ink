@@ -245,7 +245,7 @@ I'm not expecting anything right now.
 -> END
 
 = canStart
-Hello, dear. How are you today? I need you to deliver these clothes and tents to the homeless. Please try to get there before it gets dark so they can set everything up in time.!
+Hello, dear. How are you today? I need you to deliver these clothes and tents to the homeless. Please try to get there before it gets dark so they can set everything up in time!
 + [Accept quest]
     Great! Pick up the box and drive through all three checkpoints before delivering it!
     ~ StartQuest(DeliveryQuestCheckPoint2)
